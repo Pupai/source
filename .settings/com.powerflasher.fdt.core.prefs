@@ -14,5 +14,5 @@ com.powerflasher.fdt.core.ProjectTypeHint=AIR
 com.powerflasher.fdt.core.Runtime=AIR
 com.powerflasher.fdt.core.SdkName=Flex 4.6.0
 com.powerflasher.fdt.core.mobile.AirDesktop.ACTIVE=true
-com.powerflasher.fdt.core.mobile.AirDesktop.MOBILE.DESCRIPTOR=bin/Pupai Unum-app.xml
+com.powerflasher.fdt.core.mobile.AirDesktop.MOBILE.DESCRIPTOR=bin/Pupai-app.xml
 eclipse.preferences.version=1

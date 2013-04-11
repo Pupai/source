@@ -13,7 +13,7 @@
 		{
 			
 
-		super(50,300);
+		super(0,410);
 		loadGraphic(sheet, true, true,28, 42, true);
 
 		//frame para que empiece con cierto frame
