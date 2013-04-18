@@ -212,22 +212,7 @@ package {
     {
 		
        super.update();
-	   
-	   FlxG.collide(player,rampa);
-	   
-	  /* if(FlxG.collide(player,rampa)){
-		
-			if(FlxG.keys.pressed("RIGHT")){
-				player.play("right");
-				player.x+=1.5;
-				player.y-=1.5;
-	   		}
-	   		if(FlxG.keys.pressed("LEFT")){
-				player.play("left");
-				player.x-=1.5;
-				player.y+=1.5;
-	   		}	
-	   }*/
+	  
 	   
 	   
 	   if(perro.x<=250 && swap==false){
