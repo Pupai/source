@@ -33,6 +33,7 @@ package {
 		[Embed(source = "Nivel 1\\fondo_edificio.png")] public static var fondo_edificioTiles:Class;
 		[Embed(source = 'Nivel 1\\ground-tile.png')] public static var groundTiles:Class;
 		[Embed(source = 'Nivel 1\\top-tile.png')] public static var topTiles:Class;
+		[Embed(source = 'Nivel 1\\plataforma.png')] public static var plataformaTiles:Class;
 		[Embed(source = "Nivel 1\\volteado.png")] public static var carro_image:Class;
 		[Embed(source = "Nivel 1\\boton.png")] public static var boton_image:Class;
 		[Embed(source = "Nivel 1\\casa1.png")] public static var casa_image:Class;
@@ -43,10 +44,12 @@ package {
 		[Embed(source = 'Nivel 1\\nivel1_fondo_ed.csv', mimeType="application/octet-stream")] public static var Fondo_ed:Class;
 		[Embed(source = 'Nivel 1\\nivel1_tierra.csv', mimeType="application/octet-stream")] public static var Ground:Class;
 		[Embed(source = 'Nivel 1\\nivel1_top_tierra.csv', mimeType="application/octet-stream")] public static var Top_ground:Class;
+		[Embed(source = 'Nivel 1\\nivel1_plataforma.csv', mimeType="application/octet-stream")] public static var Plataforma:Class;
 
 		
 	
 		private var player:Jugador;
+		private var boss:Jefe;
 		private var perro:Perro;
 		private var perro2:Perro;
 		private var perro3:Perro;
@@ -55,6 +58,7 @@ package {
 		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
+		private var rampa:FlxTileblock;
 		private var escalera:FlxTileblock;
 	
 		private var crate:Item;
@@ -66,6 +70,7 @@ package {
 		private var  mapa_ground:FlxTilemap;
 		private var  mapa_escritorios:FlxTilemap;
 		private var  mapa_fondo_ed:FlxTilemap;
+		private var  mapa_plataforma:FlxTilemap;
 		
 		private var camera:FlxCamera;
 		
@@ -112,6 +117,10 @@ package {
 			mapa_escritorios.loadMap(new Escritorios(), escritorioTiles,45,32);
          	add(mapa_escritorios);
 			
+			mapa_plataforma =  new FlxTilemap();
+			mapa_plataforma.loadMap(new Plataforma(), plataformaTiles,45,32);
+         	add(mapa_plataforma);
+			
 					  
 		  
 		  //pared invisible!
@@ -119,6 +128,13 @@ package {
 		   pared.alpha=0;
 		   pared.makeGraphic(1, 960);
 		   add(pared);
+		   
+		   //rampa
+		   rampa = new FlxTileblock(1200,600,10,400);
+		   rampa.alpha=100;
+		   rampa.angle=45;
+		   rampa.makeGraphic(10, 300);
+		   add(rampa);
 	
 		   carro=new FlxSprite(1020,777,carro_image);
 		   carro.immovable=true;
@@ -141,7 +157,12 @@ package {
 		   add(crate2);
 		 
 		   player = new Jugador();
+		   //player.x=1600;
+		   //player.y=20;
 		   add(player);
+		   
+		   boss = new Jefe();
+		   add(boss);
 		   
 		   perro= new Perro();
 		   perro.x=130;
@@ -192,6 +213,22 @@ package {
 		
        super.update();
 	   
+	   FlxG.collide(player,rampa);
+	   
+	  /* if(FlxG.collide(player,rampa)){
+		
+			if(FlxG.keys.pressed("RIGHT")){
+				player.play("right");
+				player.x+=1.5;
+				player.y-=1.5;
+	   		}
+	   		if(FlxG.keys.pressed("LEFT")){
+				player.play("left");
+				player.x-=1.5;
+				player.y+=1.5;
+	   		}	
+	   }*/
+	   
 	   
 	   if(perro.x<=250 && swap==false){
 		perro.x--;
@@ -232,14 +269,12 @@ package {
 	   }
 	   
 	   if(FlxG.keys.pressed("A")){
-		
-		if(FlxG.keys.pressed("RIGHT")){
-			
+			if(FlxG.keys.pressed("RIGHT")){
 			player.x+=2;
 			//player.acceleration.x*2;
-		}
-		if(FlxG.keys.pressed("LEFT")){
-			player.x-=2;
+			}
+			if(FlxG.keys.pressed("LEFT")){
+				player.x-=2;
 					}		
 	   }
 	   
@@ -247,26 +282,28 @@ package {
 		player.acceleration.y = 850;
 	   }
 	   FlxG.collide(player,pared);
+	   FlxG.collide(boss,pared);
+	   
 	   FlxG.collide(crate2,pared);
 	   FlxG.collide(perro,pared);
+	   FlxG.collide(boss,mapa_ground);
 	   FlxG.collide(perro,mapa_ground);
 	   FlxG.collide(perro2,mapa_ground);
 	   FlxG.collide(perro3,mapa_ground);
 	   
 	   
 	   FlxG.collide(player,mapa_edificio);
+	   FlxG.collide(boss,mapa_edificio);
 	   FlxG.collide(perro_ed,mapa_edificio);
 	   FlxG.collide(perro2_ed,mapa_edificio);
 	   FlxG.collide(perro3_ed,mapa_edificio);		   
 	   
 	   FlxG.collide(player,mapa_escritorios);
-	   	   
-	   FlxG.collide(crate,carro);	
-	   FlxG.collide(player,carro);
-	   FlxG.collide(crate2,casa);
-	   FlxG.collide(player,casa);
+	   FlxG.collide(carro,player);
+	   FlxG.collide(casa,player);
 	   
 	   
+   
 	   if(FlxG.collide (player, boton)){
 			trace("activar boss");
 	   }
@@ -282,6 +319,9 @@ package {
 			if(FlxG.keys.pressed("LEFT")){
 				crate.x-=0.5;
 			}
+			FlxG.collide(carro,crate);
+			
+			
 	   }
 	   
 	   if(FlxG.collide(crate2,player) && !FlxG.collide(mapa_ground,crate2)){
@@ -292,7 +332,9 @@ package {
 			if(FlxG.keys.pressed("LEFT")){
 				crate2.x-=0.5;
 			}
+			FlxG.collide(casa,crate2);
 	   }
+	   
 	   if(FlxG.overlap(player,escalera)){
 		player.play("climb");
 			if(FlxG.keys.pressed("UP")){

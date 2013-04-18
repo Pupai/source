@@ -5,7 +5,7 @@
 	 */
 	public class Jefe extends FlxSprite{
 		
-		[Embed(source = "Nivel 1\\spritesheet.png")] public static var bossLevel1:Class;
+		[Embed(source = "Nivel 1\\boss1.png")] public static var bossLevel1:Class;
 
 		
 		public function Jefe()
@@ -14,7 +14,7 @@
 			
 
 		super(0,410);
-		loadGraphic(sheet, true, true,60, 90, true);
+		loadGraphic(bossLevel1, true, true,60, 90, true);
 
 		//frame para que empiece con cierto frame
 		//frame = 6;
