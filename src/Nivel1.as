@@ -120,9 +120,7 @@ package {
 			mapa_plataforma =  new FlxTilemap();
 			mapa_plataforma.loadMap(new Plataforma(), plataformaTiles,45,32);
          	add(mapa_plataforma);
-			
-					  
-		  
+  
 		  //pared invisible!
 		   pared = new FlxTileblock(0, 0, 1, 960);
 		   pared.alpha=0;
@@ -130,10 +128,10 @@ package {
 		   add(pared);
 		   
 		   //rampa
-		   rampa = new FlxTileblock(1200,600,10,400);
+		   rampa = new FlxTileblock(1330,550,10,370);
 		   rampa.alpha=100;
-		   rampa.angle=45;
-		   rampa.makeGraphic(10, 300);
+		   rampa.angle=60;
+		   rampa.makeGraphic(10, 370);
 		   add(rampa);
 	
 		   carro=new FlxSprite(1020,777,carro_image);
@@ -197,167 +195,143 @@ package {
 		   //mundo de 45 x 30 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2025,960);
 		   FlxG.camera.follow(player);
-		   FlxG.worldBounds=new FlxRect(0,0,2025,960);
+		   FlxG.worldBounds=new FlxRect(0,0,2025,960);	   
+		}
+	
+		override public function update():void{
+		
+	       super.update();
 		   
+		   //mover perro cercano a casa
+		   if(perro.x<=250 && swap==false){
+				perro.x--;
+				perro2.x--;
+				perro.play("left");
+				perro2.play("left");
+				if(perro.x==100){
+					swap=true;
+				}
+		   }
+		   //mover perro hoyo
+		   if(perro.x>=100 && swap==true){
+				perro.x++;
+				perro2.x++;
+				perro.play("right");
+				perro2.play("right");
+				if(perro.x==250){
+					swap=false;
+				}
+		   }
 		   
+		   //Movimientos Pupai
+		   if(FlxG.keys.pressed("RIGHT")){
+				player.play("right");
+				player.x+=1.5;
+		   }
+		   if(FlxG.keys.pressed("LEFT")){
+				player.play("left");
+				player.x-=1.5;
+		   }
+		   if(FlxG.keys.pressed("SPACE")){
+				player.y-=4;
+		   }
+		  
+		  if(FlxG.keys.pressed("DOWN")){
+				player.y+=3;
+		   }
 		   
-		}
-		
-
-		
-		
-		
-		
-		override public function update():void
-    {
-		
-       super.update();
-	  
+		   //Pupai corra
+		   if(FlxG.keys.pressed("A")){
+				if(FlxG.keys.pressed("RIGHT")){
+				player.x+=2;
+				}
+				if(FlxG.keys.pressed("LEFT")){
+					player.x-=2;
+				}		
+		   }
+		   
+		   //Gravedad a
+		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera)){
+			player.acceleration.y = 850;
+		   }
+		    
+		   FlxG.collide(player,pared);
+		   FlxG.collide(player,mapa_edificio);
+		   FlxG.collide(player,mapa_escritorios);
+		   
+		   FlxG.collide(boss,pared);
+		   FlxG.collide(boss,mapa_ground);
+		   FlxG.collide(boss,mapa_edificio);
+		   
+		   FlxG.collide(perro,pared);
+		   FlxG.collide(perro,mapa_ground);
+		   FlxG.collide(perro_ed,mapa_edificio);
+		   FlxG.collide(perro2,mapa_ground);
+		   FlxG.collide(perro2_ed,mapa_edificio);
+		   FlxG.collide(perro3,mapa_ground);
+		   FlxG.collide(perro3_ed,mapa_edificio);		   
+		   
+		   FlxG.collide(carro,player);
+		   FlxG.collide(casa,player);
+		   FlxG.collide(crate,mapa_ground);
+		   FlxG.collide(crate2,mapa_ground);
+		   FlxG.collide(crate2,pared);
+ 
+		   if(FlxG.collide (player, boton)){
+				trace("activar boss");
+		   }
 	   
-	   
-	   if(perro.x<=250 && swap==false){
-		perro.x--;
-		perro2.x--;
-		perro.play("left");
-		perro2.play("left");
-		if(perro.x==100){
-			swap=true;
-		}
-	   }
-	   
-	   if(perro.x>=100 && swap==true){
-		perro.x++;
-		perro2.x++;
-		perro.play("right");
-		perro2.play("right");
-		
-		if(perro.x==250){
-			swap=false;
-		}
-	   }
-	 
-	   
-	   if(FlxG.keys.pressed("RIGHT")){
-		player.play("right");
-		player.x+=1.5;
-	   }
-	   if(FlxG.keys.pressed("LEFT")){
-		player.play("left");
-		player.x-=1.5;
-	   }
-	   if(FlxG.keys.pressed("SPACE")){
-		player.y-=4;
-	   }
-	  
-	  if(FlxG.keys.pressed("DOWN")){
-		player.y+=3;
-	   }
-	   
-	   if(FlxG.keys.pressed("A")){
-			if(FlxG.keys.pressed("RIGHT")){
-			player.x+=2;
-			//player.acceleration.x*2;
-			}
-			if(FlxG.keys.pressed("LEFT")){
-				player.x-=2;
-					}		
-	   }
-	   
-	   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera)){
-		player.acceleration.y = 850;
-	   }
-	   FlxG.collide(player,pared);
-	   FlxG.collide(boss,pared);
-	   
-	   FlxG.collide(crate2,pared);
-	   FlxG.collide(perro,pared);
-	   FlxG.collide(boss,mapa_ground);
-	   FlxG.collide(perro,mapa_ground);
-	   FlxG.collide(perro2,mapa_ground);
-	   FlxG.collide(perro3,mapa_ground);
-	   
-	   
-	   FlxG.collide(player,mapa_edificio);
-	   FlxG.collide(boss,mapa_edificio);
-	   FlxG.collide(perro_ed,mapa_edificio);
-	   FlxG.collide(perro2_ed,mapa_edificio);
-	   FlxG.collide(perro3_ed,mapa_edificio);		   
-	   
-	   FlxG.collide(player,mapa_escritorios);
-	   FlxG.collide(carro,player);
-	   FlxG.collide(casa,player);
-	   
-	   
-   
-	   if(FlxG.collide (player, boton)){
-			trace("activar boss");
-	   }
-
-	   FlxG.collide(mapa_ground,crate2);
-	   FlxG.collide(mapa_ground,crate);
-	   
-	   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
-		
-			if(FlxG.keys.pressed("RIGHT")){
-				crate.x+=0.5;
-			}
-			if(FlxG.keys.pressed("LEFT")){
-				crate.x-=0.5;
-			}
-			FlxG.collide(carro,crate);
+		   //mover la caja cercana al carro
+		   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
+				if(FlxG.keys.pressed("RIGHT")){
+					crate.x+=0.5;
+				}
+				if(FlxG.keys.pressed("LEFT")){
+					crate.x-=0.5;
+				}
+				FlxG.collide(carro,crate);	
+		   }
+		   
+		   //mover caja cercana a la casa
+		   if(FlxG.collide(crate2,player) && !FlxG.collide(mapa_ground,crate2)){
 			
-			
-	   }
-	   
-	   if(FlxG.collide(crate2,player) && !FlxG.collide(mapa_ground,crate2)){
-		
-			if(FlxG.keys.pressed("RIGHT")){
-				crate2.x+=0.5;
-			}
-			if(FlxG.keys.pressed("LEFT")){
-				crate2.x-=0.5;
-			}
-			FlxG.collide(casa,crate2);
-	   }
-	   
-	   if(FlxG.overlap(player,escalera)){
-		player.play("climb");
-			if(FlxG.keys.pressed("UP")){
-				player.acceleration.y=0;
-				player.velocity.y=0;
-				
-				player.y-=2;
-				
-			}
-			if(FlxG.keys.pressed("DOWN")){
-				player.acceleration.y=0;
-				player.velocity.y=0;
-			
-				player.y+=2;
-			}
-	   }
-
-
-	   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) ){
-			player.kill();
-			FlxG.switchState(new Nivel1());
-	   }
-	    if( FlxG.collide(perro_ed,player) || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player) ){
-			player.kill();
-			FlxG.switchState(new Nivel1());
-	   }
+				if(FlxG.keys.pressed("RIGHT")){
+					crate2.x+=0.5;
+				}
+				if(FlxG.keys.pressed("LEFT")){
+					crate2.x-=0.5;
+				}
+				FlxG.collide(casa,crate2);
+		   }
+		   
+		   // subir escalera
+		   if(FlxG.overlap(player,escalera)){
+			player.play("climb");
+				if(FlxG.keys.pressed("UP")){
+					player.acceleration.y=0;
+					player.velocity.y=0;
+					player.y-=2;
+				}
+				if(FlxG.keys.pressed("DOWN")){
+					player.acceleration.y=0;
+					player.velocity.y=0;
+					player.y+=2;
+				}
+		   }
+	
+		  //Que Pupai muera al colisionar con los perros
+		   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) ){
+				player.kill();
+				FlxG.switchState(new Nivel1());
+		   }
+		    if( FlxG.collide(perro_ed,player) || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player) ){
+				player.kill();
+				FlxG.switchState(new Nivel1());
+		   }
 		
 	   }
-	  
-	   
-	   
-	   //FlxG.collide(crate,trailer);
-	//FlxG.collide(crate,player) ;
-	   //FlxG.collide(player,mapa_items);
-	   
-	   
 			
-		}
+	}
 	
 	
 }
