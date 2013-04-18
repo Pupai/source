@@ -208,6 +208,8 @@ package {
 	   FlxG.collide(perro,pared);
 	   FlxG.collide(perro,mapa_ground);
 	   FlxG.collide(perro2,mapa_ground);
+	   FlxG.collide(perro,crate);
+	   FlxG.collide(perro2, crate);
 	   
 	   FlxG.collide(mapa_ground,crate);
 	   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){

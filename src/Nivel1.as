@@ -35,6 +35,8 @@ package {
 		[Embed(source = 'Nivel 1\\top-tile.png')] public static var topTiles:Class;
 		[Embed(source = "Nivel 1\\volteado.png")] public static var carro_image:Class;
 		[Embed(source = "Nivel 1\\boton.png")] public static var boton_image:Class;
+		[Embed(source = "Nivel 1\\casa1.png")] public static var casa_image:Class;
+		
 		
 		[Embed(source = "Nivel 1\\nivel1_edificio.csv", mimeType="application/octet-stream")] public static var Edificio:Class;
 		[Embed(source = 'Nivel 1\\nivel1_escritorios.csv', mimeType="application/octet-stream")] public static var Escritorios:Class;
@@ -48,11 +50,15 @@ package {
 		private var perro:Perro;
 		private var perro2:Perro;
 		private var perro3:Perro;
+		private var perro_ed:Perro;
+		private var perro2_ed:Perro;
+		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
 		private var escalera:FlxTileblock;
 	
 		private var crate:Item;
+		private var crate2:Item;
 
 		
 		private var  mapa_edificio:FlxTilemap;
@@ -64,6 +70,8 @@ package {
 		private var camera:FlxCamera;
 		
 		private var carro: FlxSprite;
+		private var casa: FlxSprite;
+		private var boton: FlxSprite;
 
 		var counter : int=0;
 		
@@ -107,24 +115,37 @@ package {
 					  
 		  
 		  //pared invisible!
-		   pared = new FlxTileblock(0, 0, 1, 544);
+		   pared = new FlxTileblock(0, 0, 1, 960);
 		   pared.alpha=0;
-		   pared.makeGraphic(1, 544);
+		   pared.makeGraphic(1, 960);
 		   add(pared);
-		   
-		   
-		   crate=new Item("crate",45,32,940,777);
-		   crate.acceleration.y=1000;
-		   add(crate);
 	
 		   carro=new FlxSprite(1020,777,carro_image);
 		   carro.immovable=true;
 		   add(carro);
+		   
+		   casa=new FlxSprite(300,770,casa_image);
+		   casa.immovable=true;
+		   add(casa);
+		   
+		   boton=new FlxSprite(1550,804,boton_image);
+		   boton.immovable=true;
+		   add(boton);
+		   
+		   crate=new Item("crate",45,32,940,777);
+		   crate.acceleration.y=1000;
+		   add(crate);
+		   
+		   crate2=new Item("crate",45,32,150,760);
+		   crate2.acceleration.y=1000;
+		   add(crate2);
 		 
 		   player = new Jugador();
 		   add(player);
 		   
-		   perro= new Perro(); 
+		   perro= new Perro();
+		   perro.x=130;
+		   perro.y=600;
 		   //add(perro);
 		   
 		   perro2= new Perro();
@@ -133,12 +154,24 @@ package {
 		   add(perro2);
 		   
 		   perro3= new Perro();
-		   perro3.x=800;
+		   perro3.x=770;
 		   perro3.y=370;
-		   add(perro3);
+		   //add(perro3);  
 		   
-	
+		   perro_ed= new Perro();
+		   perro_ed.x=1680;
+		   perro_ed.y=320;
+		   add(perro_ed);  
 		   
+		   perro2_ed= new Perro();
+		   perro2_ed.x=1800;
+		   perro2_ed.y=450;
+		   add(perro2_ed);  
+		   
+		   perro3_ed= new Perro();
+		   perro3_ed.x=1700;
+		   perro3_ed.y=800;
+		   add(perro3_ed);  
 		   
 		   //mundo de 45 x 30 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2025,960);
@@ -214,6 +247,7 @@ package {
 		player.acceleration.y = 850;
 	   }
 	   FlxG.collide(player,pared);
+	   FlxG.collide(crate2,pared);
 	   FlxG.collide(perro,pared);
 	   FlxG.collide(perro,mapa_ground);
 	   FlxG.collide(perro2,mapa_ground);
@@ -221,19 +255,25 @@ package {
 	   
 	   
 	   FlxG.collide(player,mapa_edificio);
-	   FlxG.collide(perro,mapa_edificio);
-	   FlxG.collide(perro2,mapa_edificio);
+	   FlxG.collide(perro_ed,mapa_edificio);
+	   FlxG.collide(perro2_ed,mapa_edificio);
+	   FlxG.collide(perro3_ed,mapa_edificio);		   
 	   
 	   FlxG.collide(player,mapa_escritorios);
-	   
-	   
-	   FlxG.collide(crate,carro);
+	   	   
+	   FlxG.collide(crate,carro);	
 	   FlxG.collide(player,carro);
+	   FlxG.collide(crate2,casa);
+	   FlxG.collide(player,casa);
 	   
 	   
-	   
-	   
+	   if(FlxG.collide (player, boton)){
+			trace("activar boss");
+	   }
+
+	   FlxG.collide(mapa_ground,crate2);
 	   FlxG.collide(mapa_ground,crate);
+	   
 	   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
 		
 			if(FlxG.keys.pressed("RIGHT")){
@@ -241,6 +281,16 @@ package {
 			}
 			if(FlxG.keys.pressed("LEFT")){
 				crate.x-=0.5;
+			}
+	   }
+	   
+	   if(FlxG.collide(crate2,player) && !FlxG.collide(mapa_ground,crate2)){
+		
+			if(FlxG.keys.pressed("RIGHT")){
+				crate2.x+=0.5;
+			}
+			if(FlxG.keys.pressed("LEFT")){
+				crate2.x-=0.5;
 			}
 	   }
 	   if(FlxG.overlap(player,escalera)){
@@ -261,16 +311,11 @@ package {
 	   }
 
 
-	   if( FlxG.collide(perro,player)){
+	   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) ){
 			player.kill();
 			FlxG.switchState(new Nivel1());
 	   }
-	   if( FlxG.collide(perro2,player)){
-			player.kill();
-			FlxG.switchState(new Nivel1());	
-			
-	   }
-	   if( FlxG.collide(perro3,player)){
+	    if( FlxG.collide(perro_ed,player) || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player) ){
 			player.kill();
 			FlxG.switchState(new Nivel1());
 	   }
