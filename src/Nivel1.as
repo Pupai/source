@@ -31,12 +31,14 @@ package {
 		[Embed(source = "Nivel 1\\edificio_rojo.png")] public static var edificioTiles:Class;
 		[Embed(source = "Nivel 1\\escritorio.png")] public static var escritorioTiles:Class;
 		[Embed(source = "Nivel 1\\fondo_edificio.png")] public static var fondo_edificioTiles:Class;
-		[Embed(source = 'Nivel 1\\ground-tile.png')] public static var groundTiles:Class;
+		[Embed(source = 'Nivel 1\\ground_tile.png')] public static var groundTiles:Class;
 		[Embed(source = 'Nivel 1\\top-tile.png')] public static var topTiles:Class;
 		[Embed(source = 'Nivel 1\\plataforma.png')] public static var plataformaTiles:Class;
+		[Embed(source = 'Nivel 1\\escalera.png')] public static var escaleraTiles:Class;
 		[Embed(source = "Nivel 1\\volteado.png")] public static var carro_image:Class;
 		[Embed(source = "Nivel 1\\boton.png")] public static var boton_image:Class;
 		[Embed(source = "Nivel 1\\casa1.png")] public static var casa_image:Class;
+		
 		
 		
 		[Embed(source = "Nivel 1\\nivel1_edificio.csv", mimeType="application/octet-stream")] public static var Edificio:Class;
@@ -45,6 +47,7 @@ package {
 		[Embed(source = 'Nivel 1\\nivel1_tierra.csv', mimeType="application/octet-stream")] public static var Ground:Class;
 		[Embed(source = 'Nivel 1\\nivel1_top_tierra.csv', mimeType="application/octet-stream")] public static var Top_ground:Class;
 		[Embed(source = 'Nivel 1\\nivel1_plataforma.csv', mimeType="application/octet-stream")] public static var Plataforma:Class;
+		[Embed(source = "Nivel 1\\nivel1_escalera.csv", mimeType="application/octet-stream")] public static var Escalera:Class;
 
 		
 	
@@ -58,7 +61,6 @@ package {
 		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
-		private var rampa:FlxTileblock;
 		private var escalera:FlxTileblock;
 	
 		private var crate:Item;
@@ -71,6 +73,7 @@ package {
 		private var  mapa_escritorios:FlxTilemap;
 		private var  mapa_fondo_ed:FlxTilemap;
 		private var  mapa_plataforma:FlxTilemap;
+		private var  mapa_escalera:FlxTilemap;
 		
 		private var camera:FlxCamera;
 		
@@ -97,6 +100,10 @@ package {
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);*/			
 			
+			mapa_top_ground =  new FlxTilemap();
+			mapa_top_ground.loadMap(new Top_ground(), topTiles,45,32);
+         	add(mapa_top_ground);
+			
 			mapa_ground =  new FlxTilemap();
 			mapa_ground.loadMap(new Ground(), groundTiles,45,32);
          	add(mapa_ground);
@@ -104,11 +111,7 @@ package {
 			mapa_fondo_ed =  new FlxTilemap();
 			mapa_fondo_ed.loadMap(new Fondo_ed(), fondo_edificioTiles,45,32);
          	add(mapa_fondo_ed);
-			
-			mapa_top_ground =  new FlxTilemap();
-			mapa_top_ground.loadMap(new Top_ground(), topTiles,45,32);
-         	add(mapa_top_ground);
-			
+				
 			mapa_edificio =  new FlxTilemap();
 			mapa_edificio.loadMap(new Edificio(), edificioTiles,45,32);
          	add(mapa_edificio);			
@@ -120,21 +123,18 @@ package {
 			mapa_plataforma =  new FlxTilemap();
 			mapa_plataforma.loadMap(new Plataforma(), plataformaTiles,45,32);
          	add(mapa_plataforma);
+			
+			mapa_escalera =  new FlxTilemap();
+			mapa_escalera.loadMap(new Escalera(), escaleraTiles,45,32);
+         	add(mapa_escalera);
   
 		  //pared invisible!
 		   pared = new FlxTileblock(0, 0, 1, 960);
 		   pared.alpha=0;
 		   pared.makeGraphic(1, 960);
 		   add(pared);
-		   
-		   //rampa
-		   rampa = new FlxTileblock(1330,550,10,370);
-		   rampa.alpha=100;
-		   rampa.angle=60;
-		   rampa.makeGraphic(10, 370);
-		   add(rampa);
 	
-		   carro=new FlxSprite(1020,777,carro_image);
+		   carro=new FlxSprite(1020,783,carro_image);
 		   carro.immovable=true;
 		   add(carro);
 		   
