@@ -39,7 +39,7 @@
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
-			FlxG.switchState(new Nivel1());
+			FlxG.switchState(new Tutorial());
 			
 		}
 
