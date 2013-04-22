@@ -61,7 +61,11 @@ package {
 		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
-		private var escalera:FlxTileblock;
+		private var escalera_ed:FlxTileblock;
+		private var escalera_12:FlxTileblock;
+		private var escalera_23:FlxTileblock;
+		private var escalera_34:FlxTileblock;
+		private var escalera_45:FlxTileblock;
 	
 		private var crate:Item;
 		private var crate2:Item;
@@ -153,10 +157,39 @@ package {
 		   crate2=new Item("crate",45,32,150,760);
 		   crate2.acceleration.y=1000;
 		   add(crate2);
+		   
+		   //x, y, width, height
+		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
+		   escalera_ed.alpha=0;
+		   //width height
+		   escalera_ed.makeGraphic(44, 285);
+		   add(escalera_ed);
+		   
+		   escalera_45 = new FlxTileblock(1530, 290, 44, 29);
+		   escalera_45.alpha=100;
+		   escalera_45.makeGraphic(44, 29);
+		   add(escalera_45);
+		   
+		   escalera_34 = new FlxTileblock(1937, 418, 44, 29);
+		   escalera_34.alpha=100;
+		   escalera_34.makeGraphic(44, 29);
+		   add(escalera_34);
+		   
+		   escalera_23 = new FlxTileblock(1530, 818, 44, 29);
+		   escalera_23.alpha=100;
+		   escalera_23.makeGraphic(44, 29);
+		   add(escalera_23);
+		   
+		   escalera_12 = new FlxTileblock(1937, 672, 44, 29);
+		   escalera_12.alpha=100;
+		   escalera_12.makeGraphic(44, 29);
+		   add(escalera_12);
+		   
+		   
 		 
 		   player = new Jugador();
-		   //player.x=1600;
-		   //player.y=20;
+		   player.x=1600;
+		   player.y=20;
 		   add(player);
 		   
 		   boss = new Jefe();
@@ -251,7 +284,7 @@ package {
 		   }
 		   
 		   //Gravedad a
-		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera)){
+		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera_ed)){
 			player.acceleration.y = 850;
 		   }
 		    
@@ -305,7 +338,7 @@ package {
 		   }
 		   
 		   // subir escalera
-		   if(FlxG.overlap(player,escalera)){
+		   if(FlxG.overlap(player,escalera_ed)){
 			player.play("climb");
 				if(FlxG.keys.pressed("UP")){
 					player.acceleration.y=0;
