@@ -242,7 +242,8 @@ package {
 			player.maxAngular=400;
 			player.angularAcceleration=200;
 			escalera.kill();
-			 FlxG.collide(player,perro2)==false;			
+			perro2.kill;
+			 //FlxG.collide(player,perro2)==false;			
 			
 	   }
 	   if(player.angularVelocity>200 ){
@@ -250,18 +251,16 @@ package {
 		player.kill();
 		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
          add(texto);
+		 
+		 FlxG.switchState(new PreNivel1());
 	   }
 	   if( FlxG.collide(perro,player)){
 		player.kill();
 		FlxG.switchState(new Tutorial());
-		
-		   
-		 	
-			
-		   
+			   
 		
 	   }
-	    if( FlxG.collide(perro2,player)){
+	    if( FlxG.collide(perro2,player) && !player.angularVelocity >200){
 		player.kill();
 		FlxG.switchState(new Tutorial());
 		

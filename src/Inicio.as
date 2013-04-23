@@ -27,11 +27,9 @@
             var s:FlxSprite = new FlxSprite();
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
-			
- 
-    
- 			texto=new FlxText(0, 300, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
-         
+
+ 			texto=new FlxText(300, 300, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
+        
            add(texto);
 		   
 		   
@@ -39,7 +37,7 @@
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
-			FlxG.switchState(new Nivel1());
+			FlxG.switchState(new Tutorial());
 			
 		}
 

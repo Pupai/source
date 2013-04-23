@@ -166,22 +166,22 @@ package {
 		   add(escalera_ed);
 		   
 		   escalera_45 = new FlxTileblock(1530, 290, 44, 29);
-		   escalera_45.alpha=100;
+		   escalera_45.alpha=0;
 		   escalera_45.makeGraphic(44, 29);
 		   add(escalera_45);
 		   
 		   escalera_34 = new FlxTileblock(1937, 418, 44, 29);
-		   escalera_34.alpha=100;
+		   escalera_34.alpha=0;
 		   escalera_34.makeGraphic(44, 29);
 		   add(escalera_34);
 		   
-		   escalera_23 = new FlxTileblock(1530, 818, 44, 29);
-		   escalera_23.alpha=100;
+		   escalera_23 = new FlxTileblock(1530, 546, 44, 29);
+		   escalera_23.alpha=0;
 		   escalera_23.makeGraphic(44, 29);
 		   add(escalera_23);
 		   
 		   escalera_12 = new FlxTileblock(1937, 672, 44, 29);
-		   escalera_12.alpha=100;
+		   escalera_12.alpha=0;
 		   escalera_12.makeGraphic(44, 29);
 		   add(escalera_12);
 		   
@@ -284,7 +284,8 @@ package {
 		   }
 		   
 		   //Gravedad a
-		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera_ed)){
+		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera_ed)&& !FlxG.overlap(player,escalera_45)
+		   && !FlxG.overlap(player,escalera_34)&& !FlxG.overlap(player,escalera_23)&& !FlxG.overlap(player,escalera_12)){
 			player.acceleration.y = 850;
 		   }
 		    
@@ -338,7 +339,8 @@ package {
 		   }
 		   
 		   // subir escalera
-		   if(FlxG.overlap(player,escalera_ed)){
+		   if(FlxG.overlap(player,escalera_ed) || FlxG.overlap(player,escalera_45) || FlxG.overlap(player,escalera_34)
+		   || FlxG.overlap(player,escalera_23) || FlxG.overlap(player,escalera_12)){
 			player.play("climb");
 				if(FlxG.keys.pressed("UP")){
 					player.acceleration.y=0;
