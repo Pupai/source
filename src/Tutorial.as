@@ -121,15 +121,8 @@ package {
 		   FlxG.camera.follow(player);
 		   FlxG.worldBounds=new FlxRect(0,0,765,544);
 		   
-		   
-		   
 		}
-		
-
-		
-		
-		
-		
+			
 		override public function update():void
     {
 		
@@ -260,12 +253,9 @@ package {
 			   
 		
 	   }
-	    if( FlxG.collide(perro2,player) && !player.angularVelocity >200){
+	    if( FlxG.collide(perro2,player) && !player.angularVelocity >100){
 		player.kill();
 		FlxG.switchState(new Tutorial());
-		
-			
-
 		
 			
 		 }

@@ -16,14 +16,9 @@ package {
     import org.flixel.FlxSprite;
     import org.flixel.FlxState;
     import org.flixel.FlxText;
+	import org.flixel.FlxGroup;
 	
-	/*
-	 *Al rato que llegue hago la casa destruida para ponerla al principio y la plataforma donde irá el boss
-	 *No puedo hacer que el crate collidee con el bochito!
-	 *Tmb en la carpeta de nivel 1 está guardada la imagen del boton que tiene que ir adentro del edificio para activar el boss
-	 *pero no está puesto
-	  
-	 */
+	
 	
 	
 	public class Nivel1 extends FlxState{
@@ -35,9 +30,14 @@ package {
 		[Embed(source = 'Nivel 1\\top-tile.png')] public static var topTiles:Class;
 		[Embed(source = 'Nivel 1\\plataforma.png')] public static var plataformaTiles:Class;
 		[Embed(source = 'Nivel 1\\escalera.png')] public static var escaleraTiles:Class;
+		[Embed(source = 'Nivel 1\\escalera_sewer.png')] public static var esc_sewerTiles:Class;
 		[Embed(source = "Nivel 1\\volteado.png")] public static var carro_image:Class;
 		[Embed(source = "Nivel 1\\boton.png")] public static var boton_image:Class;
 		[Embed(source = "Nivel 1\\casa1.png")] public static var casa_image:Class;
+		[Embed(source = "Nivel 1\\roca.png")] public static var roca_image:Class;
+		[Embed(source = "Nivel 1\\tapa.png")] public static var tapa_image:Class;
+		[Embed(source = "lifebar.png")] public static var barra_image:Class;
+		[Embed(source = "vida.png")] public static var vida_image:Class;
 		
 		
 		
@@ -48,6 +48,7 @@ package {
 		[Embed(source = 'Nivel 1\\nivel1_top_tierra.csv', mimeType="application/octet-stream")] public static var Top_ground:Class;
 		[Embed(source = 'Nivel 1\\nivel1_plataforma.csv', mimeType="application/octet-stream")] public static var Plataforma:Class;
 		[Embed(source = "Nivel 1\\nivel1_escalera.csv", mimeType="application/octet-stream")] public static var Escalera:Class;
+		[Embed(source = "Nivel 1\\nivel1_esc_sewer.csv", mimeType="application/octet-stream")] public static var Escalera_sewer:Class;
 
 		
 	
@@ -66,6 +67,7 @@ package {
 		private var escalera_23:FlxTileblock;
 		private var escalera_34:FlxTileblock;
 		private var escalera_45:FlxTileblock;
+		private var escalera_sw:FlxTileblock;
 	
 		private var crate:Item;
 		private var crate2:Item;
@@ -78,12 +80,22 @@ package {
 		private var  mapa_fondo_ed:FlxTilemap;
 		private var  mapa_plataforma:FlxTilemap;
 		private var  mapa_escalera:FlxTilemap;
+		private var  mapa_esc_sewer:FlxTilemap;
 		
 		private var camera:FlxCamera;
 		
 		private var carro: FlxSprite;
 		private var casa: FlxSprite;
 		private var boton: FlxSprite;
+		private var roca: FlxSprite;
+		private var tapa: FlxSprite;
+		private var lifebar: FlxSprite;
+		private var bar0_20: FlxSprite;
+		private var bar20_40: FlxSprite;
+		private var bar40_60: FlxSprite;
+		private var bar60_80: FlxSprite;
+		
+		
 
 		var counter : int=0;
 		
@@ -131,6 +143,10 @@ package {
 			mapa_escalera =  new FlxTilemap();
 			mapa_escalera.loadMap(new Escalera(), escaleraTiles,45,32);
          	add(mapa_escalera);
+			
+			mapa_esc_sewer =  new FlxTilemap();
+			mapa_esc_sewer.loadMap(new Escalera_sewer(), esc_sewerTiles,45,32);
+         	add(mapa_esc_sewer);
   
 		  //pared invisible!
 		   pared = new FlxTileblock(0, 0, 1, 960);
@@ -145,6 +161,10 @@ package {
 		   casa=new FlxSprite(300,770,casa_image);
 		   casa.immovable=true;
 		   add(casa);
+		   
+		   roca=new FlxSprite(400,800,roca_image);
+		   roca.immovable=true;
+		   add(roca);
 		   
 		   boton=new FlxSprite(1550,804,boton_image);
 		   boton.immovable=true;
@@ -185,11 +205,52 @@ package {
 		   escalera_12.makeGraphic(44, 29);
 		   add(escalera_12);
 		   
+		   escalera_sw = new FlxTileblock(1666, 834, 44, 128);
+		   escalera_sw.alpha=0;
+		   escalera_sw.makeGraphic(44, 128);
+		   add(escalera_sw);
 		   
+		   //cuando el boss se muera mover tapa para que Pupai baje por escaleras
+		   tapa=new FlxSprite(1666,832,tapa_image);
+		   tapa.immovable=true;
+		   add(tapa);
+		   
+		   lifebar=new FlxSprite(5,5,barra_image);
+		   lifebar.scrollFactor.x=0;
+		   lifebar.scrollFactor.y=0;
+		   add(lifebar);
+		   
+		   //Vida de Pupai
+		   bar0_20=new FlxSprite(53,18,vida_image);
+		   bar0_20.scrollFactor.x=0;
+		   bar0_20.scrollFactor.y=0;
+		   add(bar0_20);
+		   
+		   bar20_40=new FlxSprite(73,18,vida_image);
+		   bar20_40.scrollFactor.x=0;
+		   bar20_40.scrollFactor.y=0;
+		   add(bar20_40);
+		   
+		   bar40_60=new FlxSprite(93,18,vida_image);
+		   bar40_60.scrollFactor.x=0;
+		   bar40_60.scrollFactor.y=0;
+		   add(bar40_60);
+		   
+		   bar60_80=new FlxSprite(113,18,vida_image);
+		   bar60_80.scrollFactor.x=0;
+		   bar60_80.scrollFactor.y=0;
+		   add(bar60_80);
+		   
+		   /*vida = new FlxGroup();
+		   vida.add(bar60_80);
+		   vida.add(bar40_60);
+		   vida.add(bar20_40);
+		   vida.add(bar0_20);
+		   add(vida);*/
 		 
 		   player = new Jugador();
 		   player.x=1600;
-		   player.y=20;
+		   player.y=750;
 		   add(player);
 		   
 		   boss = new Jefe();
@@ -198,7 +259,7 @@ package {
 		   perro= new Perro();
 		   perro.x=130;
 		   perro.y=600;
-		   //add(perro);
+		   add(perro);
 		   
 		   perro2= new Perro();
 		   perro2.x=650;
@@ -208,7 +269,7 @@ package {
 		   perro3= new Perro();
 		   perro3.x=770;
 		   perro3.y=370;
-		   //add(perro3);  
+		   add(perro3);  
 		   
 		   perro_ed= new Perro();
 		   perro_ed.x=1680;
@@ -283,9 +344,10 @@ package {
 				}		
 		   }
 		   
-		   //Gravedad a
+		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera_ed)&& !FlxG.overlap(player,escalera_45)
-		   && !FlxG.overlap(player,escalera_34)&& !FlxG.overlap(player,escalera_23)&& !FlxG.overlap(player,escalera_12)){
+		   && !FlxG.overlap(player,escalera_34)&& !FlxG.overlap(player,escalera_23)&& !FlxG.overlap(player,escalera_12) 
+		   && !FlxG.overlap(player,escalera_sw)){
 			player.acceleration.y = 850;
 		   }
 		    
@@ -298,22 +360,23 @@ package {
 		   FlxG.collide(boss,mapa_edificio);
 		   
 		   FlxG.collide(perro,pared);
+		   FlxG.collide(perro,roca);
 		   FlxG.collide(perro,mapa_ground);
 		   FlxG.collide(perro_ed,mapa_edificio);
 		   FlxG.collide(perro2,mapa_ground);
 		   FlxG.collide(perro2_ed,mapa_edificio);
 		   FlxG.collide(perro3,mapa_ground);
-		   FlxG.collide(perro3_ed,mapa_edificio);		   
+		   FlxG.collide(perro3_ed,mapa_edificio);
+		   FlxG.collide(perro3_ed,tapa);
+		   		   
 		   
 		   FlxG.collide(carro,player);
+		   FlxG.collide(tapa,player);
 		   FlxG.collide(casa,player);
+		   FlxG.collide(roca,player);
 		   FlxG.collide(crate,mapa_ground);
 		   FlxG.collide(crate2,mapa_ground);
 		   FlxG.collide(crate2,pared);
- 
-		   if(FlxG.collide (player, boton)){
-				trace("activar boss");
-		   }
 	   
 		   //mover la caja cercana al carro
 		   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
@@ -340,7 +403,7 @@ package {
 		   
 		   // subir escalera
 		   if(FlxG.overlap(player,escalera_ed) || FlxG.overlap(player,escalera_45) || FlxG.overlap(player,escalera_34)
-		   || FlxG.overlap(player,escalera_23) || FlxG.overlap(player,escalera_12)){
+		   || FlxG.overlap(player,escalera_23) || FlxG.overlap(player,escalera_12) || FlxG.overlap(player,escalera_sw)){
 			player.play("climb");
 				if(FlxG.keys.pressed("UP")){
 					player.acceleration.y=0;
@@ -354,15 +417,31 @@ package {
 				}
 		   }
 	
-		  //Que Pupai muera al colisionar con los perros
-		   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) ){
-				player.kill();
+		  //-20 de vida cuando choque con perro
+		   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) || FlxG.collide(perro_ed,player)
+		    || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player)){
+				
+				if(player.health==80){
+					bar60_80.exists=false;
+				}
+				else if(player.health==60){
+					bar40_60.exists=false;
+				}
+				else if(player.health==40){
+					bar20_40.exists=false;
+				}
+				else if(player.health==20){
+					bar0_20.exists=false;
+				}
+				player.hurt(20);		
+		   }
+		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
 		   }
-		    if( FlxG.collide(perro_ed,player) || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player) ){
-				player.kill();
-				FlxG.switchState(new Nivel1());
+		    if(FlxG.collide (player, boton)){
+				trace("activar boss");				
 		   }
+		    
 		
 	   }
 			

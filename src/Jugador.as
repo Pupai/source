@@ -7,10 +7,12 @@
 		
 		[Embed(source = 'spritesheet.png')] public static var sheet:Class;
 
+
 		
 		public function Jugador()
 
 		{
+	
 			
 
 		super(0,410);
@@ -18,6 +20,7 @@
 
 		//frame para que empiece con cierto frame
 		//frame = 6;
+		health = 80;
 		acceleration.y = 850;
 		addAnimation("right", [0,1,2,3], 10, false);
 		addAnimation("climb", [8,9,10,11], 10, false);
