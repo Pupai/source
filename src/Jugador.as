@@ -1,4 +1,6 @@
 ﻿package  {
+	import org.flixel.FlxObject;
+	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	/**
 	 * @author ieiomeli
@@ -6,7 +8,27 @@
 	public class Jugador extends FlxSprite{
 		
 		[Embed(source = 'spritesheet.png')] public static var sheet:Class;
-
+		public function pelea(a:Perro){
+			if(this.x+18>a.x){
+				trace(this.x,a.x);
+				a.kill();
+				
+			}
+			else{
+				this.hurt(20);
+				if(this.facing == FlxObject.RIGHT){
+					trace("derecha");
+					this.x-=20;
+					this.y-=10;		
+				}
+				if(this.facing == FlxObject.LEFT){
+					trace("izquierda");	
+					this.x+=20;
+					this.y-=10;	
+				}
+		}
+		
+		}
 
 		
 		public function Jugador()

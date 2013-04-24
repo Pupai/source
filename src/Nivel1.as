@@ -291,11 +291,29 @@ package {
 		   FlxG.camera.follow(player);
 		   FlxG.worldBounds=new FlxRect(0,0,2025,960);	   
 		}
+		
+		
+		public function barra():void{
+			if(player.health==80){
+					bar60_80.exists=false;
+				}
+				else if(player.health==60){
+					bar40_60.exists=false;
+				}
+				else if(player.health==40){
+					bar20_40.exists=false;
+				}
+				else if(player.health==20){
+					bar0_20.exists=false;
+				}
+		}
 	
 		override public function update():void{
 		
 	       super.update();
 		   
+		   // llamar a la barra de vida
+		   barra();
 		   //mover perro cercano a casa
 		   if(perro.x<=250 && swap==false){
 				perro.x--;
@@ -418,22 +436,41 @@ package {
 		   }
 	
 		  //-20 de vida cuando choque con perro
-		   if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) || FlxG.collide(perro_ed,player)
+		  
+		   if(FlxG.collide(perro2,player)){
+			player.pelea(perro2);
+			
+		   }
+		   if(FlxG.collide(perro,player)){
+			player.pelea(perro);
+			
+		   }
+		   if(FlxG.collide(perro3,player)){
+			player.pelea(perro3);
+		   }
+		   
+
+		   if(FlxG.collide(perro_ed,player)){
+			player.pelea(perro_ed);
+			
+		   }
+		   if(FlxG.collide(perro2_ed,player)){
+			player.pelea(perro2_ed);
+			
+		   }
+		   if(FlxG.collide(perro3_ed,player)){
+			player.pelea(perro3_ed);
+			
+		   }
+		  
+		  
+		  
+		  
+		  /* if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) || FlxG.collide(perro_ed,player)
 		    || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player)){
 				
-				if(player.health==80){
-					bar60_80.exists=false;
-				}
-				else if(player.health==60){
-					bar40_60.exists=false;
-				}
-				else if(player.health==40){
-					bar20_40.exists=false;
-				}
-				else if(player.health==20){
-					bar0_20.exists=false;
-				}
-				player.hurt(20);
+				
+				
 				if(player.facing == FlxObject.RIGHT){
 					trace("derecha");
 					player.x-=20;
@@ -445,7 +482,7 @@ package {
 					player.y-=10;	
 				}
 				
-		   }
+		   }*/
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
 		   }
