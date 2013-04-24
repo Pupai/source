@@ -249,8 +249,8 @@ package {
 		   add(vida);*/
 		 
 		   player = new Jugador();
-		   player.x=1600;
-		   player.y=750;
+		   //player.x=1600;
+		   //player.y=750;
 		   add(player);
 		   
 		   boss = new Jefe();
@@ -433,7 +433,18 @@ package {
 				else if(player.health==20){
 					bar0_20.exists=false;
 				}
-				player.hurt(20);		
+				player.hurt(20);
+				if(player.facing == FlxObject.RIGHT){
+					trace("derecha");
+					player.x-=20;
+					player.y-=10;		
+				}
+				if(player.facing == FlxObject.LEFT){
+					trace("izquierda");	
+					player.x+=20;
+					player.y-=10;	
+				}
+				
 		   }
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
