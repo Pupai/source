@@ -1,4 +1,5 @@
 package  {
+	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	/**
 	 * @author ieiomeli
@@ -20,6 +21,7 @@ package  {
 		//frame = 6;
 		
 		acceleration.y = 850;
+		
 		addAnimation("right", [0,1,2,3], 10, false);
 		addAnimation("left", [4,5,6,7], 10, false);
 

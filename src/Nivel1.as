@@ -1,4 +1,5 @@
 package {
+	import org.flixel.system.FlxTile;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxRect;
@@ -63,6 +64,7 @@ package {
 	
 		private var pared:FlxTileblock;
 		private var escalera_ed:FlxTileblock;
+		private var escalera_ed1E:FlxTileblock;
 		private var escalera_12:FlxTileblock;
 		private var escalera_23:FlxTileblock;
 		private var escalera_34:FlxTileblock;
@@ -95,14 +97,14 @@ package {
 		private var bar40_60: FlxSprite;
 		private var bar60_80: FlxSprite;
 		
-		
-
 		var counter : int=0;
 		
 		
 		var _jump:Number = 0;
 		var swap:Boolean=false;
 		var swap2:Boolean=false;
+		
+		var paused:Boolean=true;;
 		
 		 public function Nivel1()
         {
@@ -180,7 +182,7 @@ package {
 		   
 		   //x, y, width, height
 		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
-		   escalera_ed.alpha=0;
+		   escalera_ed.alpha=0
 		   //width height
 		   escalera_ed.makeGraphic(44, 285);
 		   add(escalera_ed);
@@ -189,6 +191,11 @@ package {
 		   escalera_45.alpha=0;
 		   escalera_45.makeGraphic(44, 29);
 		   add(escalera_45);
+		   
+		   escalera_ed1E= new FlxTileblock(1800, 190, 44, 29);
+		   escalera_ed1E.alpha=100;
+		   escalera_ed1E.makeGraphic(44, 29);
+		   add(escalera_ed1E);
 		   
 		   escalera_34 = new FlxTileblock(1937, 418, 44, 29);
 		   escalera_34.alpha=0;
@@ -235,7 +242,6 @@ package {
 		   bar40_60.scrollFactor.x=0;
 		   bar40_60.scrollFactor.y=0;
 		   add(bar40_60);
-		   
 		   bar60_80=new FlxSprite(113,18,vida_image);
 		   bar60_80.scrollFactor.x=0;
 		   bar60_80.scrollFactor.y=0;
@@ -252,6 +258,7 @@ package {
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
+		   trace(player.bandera);
 		   
 		   boss = new Jefe();
 		   add(boss);
@@ -282,7 +289,7 @@ package {
 		   add(perro2_ed);  
 		   
 		   perro3_ed= new Perro();
-		   perro3_ed.x=1700;
+		   perro3_ed.x=1800;
 		   perro3_ed.y=800;
 		   add(perro3_ed);  
 		   
@@ -294,32 +301,59 @@ package {
 		
 		
 		public function barra():void{
-			if(player.health==80){
+			if(player.health==60){
 					bar60_80.exists=false;
 				}
-				else if(player.health==60){
+				else if(player.health==40){
 					bar40_60.exists=false;
 				}
-				else if(player.health==40){
+				else if(player.health==20){
 					bar20_40.exists=false;
 				}
-				else if(player.health==20){
+				else if(player.health==0){
 					bar0_20.exists=false;
 				}
+		}
+		
+		public function bajarVida():void{
+			if(player.bandera){
+				barra();
+				player.bandera=false;
+			}
 		}
 	
 		override public function update():void{
 		
 	       super.update();
 		   
+			   if(FlxG.keys.justPressed("P"))
+				paused = !paused;
+				if(!paused)
+				//texto.kill();
+				if(paused){
+				//texto.y=player.y-340;
+				//texto.revive();
+				return;
+					}
+		   
+		   
+		   
 		   // llamar a la barra de vida
-		   barra();
+		   
 		   //mover perro cercano a casa
 		   if(perro.x<=250 && swap==false){
 				perro.x--;
 				perro2.x--;
+				perro3.x--;
+				perro_ed.x--;
+				perro2_ed.x--;
+				perro3_ed.x--;
 				perro.play("left");
 				perro2.play("left");
+				perro3.play("left");
+				perro_ed.play("left");
+				perro2_ed.play("left");
+				perro3_ed.play("left");
 				if(perro.x==100){
 					swap=true;
 				}
@@ -328,8 +362,16 @@ package {
 		   if(perro.x>=100 && swap==true){
 				perro.x++;
 				perro2.x++;
+				perro3.x++;
+				perro_ed.x++;
+				perro2_ed.x++;
+				perro3_ed.x++;
 				perro.play("right");
 				perro2.play("right");
+				perro3.play("right");
+				perro_ed.play("right");
+				perro2_ed.play("right");
+				perro3_ed.play("right");
 				if(perro.x==250){
 					swap=false;
 				}
@@ -365,12 +407,13 @@ package {
 		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera_ed)&& !FlxG.overlap(player,escalera_45)
 		   && !FlxG.overlap(player,escalera_34)&& !FlxG.overlap(player,escalera_23)&& !FlxG.overlap(player,escalera_12) 
-		   && !FlxG.overlap(player,escalera_sw)){
+		   && !FlxG.overlap(player,escalera_sw) && !FlxG.overlap(player,escalera_ed1E)){
 			player.acceleration.y = 850;
 		   }
 		    
 		   FlxG.collide(player,pared);
 		   FlxG.collide(player,mapa_edificio);
+		   //collide de un lado!!
 		   FlxG.collide(player,mapa_escritorios);
 		   
 		   FlxG.collide(boss,pared);
@@ -421,7 +464,8 @@ package {
 		   
 		   // subir escalera
 		   if(FlxG.overlap(player,escalera_ed) || FlxG.overlap(player,escalera_45) || FlxG.overlap(player,escalera_34)
-		   || FlxG.overlap(player,escalera_23) || FlxG.overlap(player,escalera_12) || FlxG.overlap(player,escalera_sw)){
+		   || FlxG.overlap(player,escalera_23) || FlxG.overlap(player,escalera_12) || FlxG.overlap(player,escalera_sw)
+		   || FlxG.overlap(player,escalera_ed1E)){
 			player.play("climb");
 				if(FlxG.keys.pressed("UP")){
 					player.acceleration.y=0;
@@ -437,52 +481,33 @@ package {
 	
 		  //-20 de vida cuando choque con perro
 		  
-		   if(FlxG.collide(perro2,player)){
+		   if(FlxG.overlap(perro2,player)){
 			player.pelea(perro2);
-			
+			bajarVida();			
 		   }
-		   if(FlxG.collide(perro,player)){
+		   if(FlxG.overlap(perro,player)){
 			player.pelea(perro);
-			
+			bajarVida();
 		   }
-		   if(FlxG.collide(perro3,player)){
+		   if(FlxG.overlap(perro3,player)){
 			player.pelea(perro3);
+			bajarVida();
 		   }
 		   
-
-		   if(FlxG.collide(perro_ed,player)){
+		   if(FlxG.overlap(perro_ed,player)){
 			player.pelea(perro_ed);
-			
+			bajarVida();
 		   }
-		   if(FlxG.collide(perro2_ed,player)){
+		   if(FlxG.overlap(perro2_ed,player)){
 			player.pelea(perro2_ed);
-			
+			bajarVida();
 		   }
-		   if(FlxG.collide(perro3_ed,player)){
+		   if(FlxG.overlap(perro3_ed,player)){
 			player.pelea(perro3_ed);
-			
+			bajarVida();
 		   }
 		  
 		  
-		  
-		  
-		  /* if( FlxG.collide(perro,player) || FlxG.collide(perro2,player) || FlxG.collide(perro3,player) || FlxG.collide(perro_ed,player)
-		    || FlxG.collide(perro2_ed,player) || FlxG.collide(perro3_ed,player)){
-				
-				
-				
-				if(player.facing == FlxObject.RIGHT){
-					trace("derecha");
-					player.x-=20;
-					player.y-=10;		
-				}
-				if(player.facing == FlxObject.LEFT){
-					trace("izquierda");	
-					player.x+=20;
-					player.y-=10;	
-				}
-				
-		   }*/
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
 		   }
