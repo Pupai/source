@@ -28,7 +28,7 @@
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
 
- 			texto=new FlxText(300, 300, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
+ 			texto=new FlxText(0, 200, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
         
            add(texto);
 		   
