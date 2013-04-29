@@ -9,14 +9,15 @@ package {
 		public function Globo(){
 			this.x=10;
 			this.y=20;
-			this.acceleration.y=9;
+			this.acceleration.y=0;
+			this.velocity.x=200;
 			this.exists = false;
 			makeGraphic(10, 10);
 			
 		}
 		override public function update():void{
 			super.update();
-			if(this.y > 300){
+			if(this.x > 800){
 				this.exists = false;
 			}
 		}
