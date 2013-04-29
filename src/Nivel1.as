@@ -104,8 +104,10 @@ package {
 		var swap:Boolean=false;
 		var swap2:Boolean=false;
 		
-		var paused:Boolean=true;;
-		
+		var paused:Boolean=true;
+		var bullet:Globo;
+		var globiza:FlxGroup;
+		var c:Number=0;
 		 public function Nivel1()
         {
             super();
@@ -292,7 +294,12 @@ package {
 		   perro3_ed.x=1800;
 		   perro3_ed.y=800;
 		   add(perro3_ed);  
-		   
+		   globiza=new FlxGroup();
+		   for (var i:Number=0;i<10;i++){
+				bullet=new Globo();
+				globiza.add(bullet);
+		   }
+		   add(globiza);
 		   //mundo de 45 x 30 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2025,960);
 		   FlxG.camera.follow(player);
@@ -415,6 +422,10 @@ package {
 		   FlxG.collide(player,mapa_edificio);
 		   //collide de un lado!!
 		   FlxG.collide(player,mapa_escritorios);
+		   FlxG.collide(boss,pared);
+		   FlxG.collide(boss,mapa_edificio);
+		   //collide de un lado!!
+		   FlxG.collide(boss,mapa_escritorios);
 		   
 		   FlxG.collide(boss,pared);
 		   FlxG.collide(boss,mapa_ground);
@@ -514,7 +525,30 @@ package {
 		    if(FlxG.collide (player, boton)){
 				trace("activar boss");				
 		   }
-		    
+		    boss.play("runleft");
+			var bool:Boolean=false;
+			
+			if(boss.y>300){
+				if(c<500){
+					boss.play("runright");
+					boss.move("runright");
+					c++;
+				}
+				else if(c>=500 && c<1000){
+					boss.play("runleft");
+					boss.move("runleft");
+					c++;
+				}
+			}
+	   if(FlxG.keys.pressed("S")){
+			bool=true;
+			boss.shoot(bool,"attackright");
+			bullet= Globo(globiza.getFirstAvailable());
+				bullet.x=boss.x+55;
+				bullet.y=boss.y+54;
+				bullet.exists=true;
+		
+		}
 		
 	   }
 			

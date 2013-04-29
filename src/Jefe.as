@@ -1,20 +1,24 @@
 ﻿package  {
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
-	/**
-	 * @author ieiomeli
-	 */
+
+	
 	public class Jefe extends FlxSprite{
+		 	
 		
 		[Embed(source = "Nivel 1\\boss1.png")] public static var bossLevel1:Class;
-
-		
+		var bullet:Globo;
+		var bullets:FlxGroup;
 		public function Jefe()
 
 		{
+			super(0,200);
+
+			
 			
 
-		super(0,410);
-		loadGraphic(bossLevel1, true, true,60, 90, true);
+		
+		loadGraphic(bossLevel1, true, true,67, 90, true);
 
 		//frame para que empiece con cierto frame
 		//frame = 6;
@@ -26,13 +30,29 @@
 		addAnimation("left", [6,7], 10, false);
 		addAnimation("runleft", [8,9], 10, false);
 		addAnimation("attackleft", [10,11], 10, false);
-
-
-		
-		
-
-		
-
+	
+	
+		}
+		public function shoot(state:Boolean, dir:String):void {
+			if(state){
+				play(dir);
+					
+			}
+		}
+		public function move(dir:String):void {
+			if(dir=="right"){
+				this.x++;				
+			}
+			else if(dir=="left"){
+				this.x--;	
+			}
+			else if(dir=="runright"){
+				this.x+=1;
+			}
+			else if(dir=="runleft"){
+				this.x-=1;
+			}
+			
 		}
 	}
 }
