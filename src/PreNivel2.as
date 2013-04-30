@@ -11,12 +11,12 @@
     import org.flixel.FlxState;
     import org.flixel.FlxText;
 	
-	public class Inicio extends FlxState{
+	public class PreNivel2 extends FlxState{
 		
 		
 		private var texto:FlxText;
 		
-		 public function Inicio()
+		 public function PreNivel2()
         {
             super();
         }
@@ -27,13 +27,9 @@
             var s:FlxSprite = new FlxSprite();
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
-
- 			texto=new FlxText(0, 200, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
-        
-           add(texto);
 		   
 		   
-		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Start Game!", Iniciar);
+		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Level 2!", Iniciar);
 		   add(botonInicio);
 		}
 		public function Iniciar():void{

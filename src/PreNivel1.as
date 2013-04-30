@@ -27,12 +27,6 @@
             var s:FlxSprite = new FlxSprite();
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
-			
- 
-    
- 			texto=new FlxText(0, 300, FlxG.width, "bla bla bla bla").setFormat(null, 21, 0xFFF3030, "center");
-         
-           add(texto);
 		   
 		   
 		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Level 1!", Iniciar);
