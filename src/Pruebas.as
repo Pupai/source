@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxGroup;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxRect;
@@ -6,9 +7,7 @@ package {
 	import org.flixel.FlxTilemap;
 	import org.flixel.FlxTileblock;
 	import org.flixel.FlxButton;
-	/**
-	 * @author ieiomeli
-	 */
+
 	
 	import flash.events.MouseEvent;
  
@@ -18,7 +17,7 @@ package {
     import org.flixel.FlxText;
 	
 	
-	public class Tutorial extends FlxState{
+	public class Pruebas extends FlxState{
 		
 		[Embed(source = "Tutorial\\ground-tile.png")] public static var groundTiles:Class;
 		[Embed(source = "Tutorial\\escalera.png")] public static var itemsTiles:Class;
@@ -27,7 +26,6 @@ package {
 		[Embed(source = "Tutorial\\ground.csv", mimeType="application/octet-stream")] public static var Ground:Class;
 		[Embed(source = 'Tutorial\\escalera.csv', mimeType="application/octet-stream")] public static var Items:Class;
 		[Embed(source = 'Tutorial\\top.csv', mimeType="application/octet-stream")] public static var Top:Class;
-		[Embed(source = 'Tutorial\\music.mp3')] private var sound:Class;
 		[Embed(source = 'visores.png')] public static var vsheet:Class;
 		
 		private var texto:FlxText;
@@ -46,14 +44,20 @@ package {
 		private var visores: Item;
 		private var trailer: FlxSprite;
 		private var musica:FlxG= new FlxG();
+		private var boss:Jefe=new Jefe();
 		var counter : int=0;
+		var bullet:Globo;
+		var globiza:FlxGroup;
+		var bool:Boolean=false;
+		var dir:Boolean=false;
+		var bossmove:Number=0;
 		
 		
 		var _jump:Number = 0;
 		var swap:Boolean=false;
 		var swap2:Boolean=false;
 		
-		 public function Tutorial()
+		 public function Pruebas()
         {
             super();
         }
@@ -99,22 +103,27 @@ package {
 		   add(crate);
 		   add(visores);
 		  
-		   player = new Jugador(0,410);
-		   
-		   add(player);
-		   
+		   player = new Jugador();
+		  	   
 		   perro= new Perro();
 		   
-		   add(perro);
-		   
+
 		   perro2= new Perro();
 		   perro2.x=650;
 		   perro2.y=370;
-		   add(perro2)
+
 		   texto=new FlxText(50, 260, FlxG.width, "Muevete con las flechas del teclado, salta con espacio y acelera con A," +"\n"+ "tu primera prueba sera esquivar a los enemigos y llegar al final" ).setFormat(null, 9, 0xFFF3030, "center");
          
            add(texto);
 		   
+		   add(boss);
+		   
+		   globiza=new FlxGroup();
+			for (var i:Number=0;i<10;i++){
+				bullet=new Globo();
+				globiza.add(bullet);
+			}
+			add(globiza);
 		   
 		   //camera=new FlxCamera(-100, 100, 770, 544);
 		   FlxG.camera.setBounds(0,0,765,544);
@@ -127,140 +136,68 @@ package {
     {
 		
        super.update();
-	   
-	   FlxG.play(sound,.2);
-	   visores.x=player.x-10;
-	   texto.x=visores.x+20;
-	   visores.play("move")
-	   
-	   if(player.x>100){
-		texto.visible=false;
+	   if(FlxG.collide(boss,mapa_ground)){
+		if(bossmove<120){
+			bossmove++;
+			if(bossmove>=50 && bossmove<=55){
+				trace("pew");
+			   	bool=true;
+				boss.shoot(bool,"attackright");
+				bullet= Globo(globiza.getFirstAvailable());
+				bullet.x=boss.x+55;
+				bullet.y=boss.y+54;
+				bullet.exists=true;
+			}
+			else if(bossmove>=56 && bossmove<=70){
+				boss.move("stop"); 
+			}
+			else{
+				boss.move("runright");
+				dir=false;
+				
+				
+			}
 	   }
-	   
-	   if(perro.x<=250 && swap==false){
-		perro.x--;
-		perro2.x--;
-		perro.play("left");
-		perro2.play("left");
-		if(perro.x==100){
-			swap=true;
-		}
-	   }
-	   
-	   if(perro.x>=100 && swap==true){
-		perro.x++;
-		perro2.x++;
-		perro.play("right");
-		perro2.play("right");
+
+	   else if(bossmove<220){
+		bossmove++;
+		boss.move("runleft");
+		dir=true;
 		
-		if(perro.x==250){
-			swap=false;
-		}
-	   }
-	 
-	   
-	   if(FlxG.keys.pressed("RIGHT")){
-		player.play("right");
-		player.x+=1.5;
-	   }
-	   if(FlxG.keys.pressed("LEFT")){
-		player.play("left");
-		player.x-=1.5;
-	   }
-	   if(FlxG.keys.pressed("SPACE")){
-		player.y-=4;
-	   }
-	  
-	  if(FlxG.keys.pressed("DOWN")){
-		player.y+=3;
 	   }
 	   
-	   if(FlxG.keys.pressed("A")){
-		
-		if(FlxG.keys.pressed("RIGHT")){
+		else {
+			bossmove=0;
+			if(!dir){
+				boss.play("right");
+			}
+			else {
+				boss.play("left");
+			}
 			
-			player.x+=2;
-			//player.acceleration.x*2;
-		}
-		if(FlxG.keys.pressed("LEFT")){
-			player.x-=2;
-					}
-		
-		
 	   }
+	   }
+	   
+	   if(FlxG.keys.pressed("S")){
+			bool=true;
+			boss.shoot(bool,"attackright");
+			bullet= Globo(globiza.getFirstAvailable());
+				bullet.x=boss.x+55;
+				bullet.y=boss.y+54;
+				bullet.exists=true;
+		
+		}
+		
+		
+	   
+	   
 	   
 	   
 	   
 	   
 	   //player.velocity.y=50;
 	   
-	   if(!FlxG.collide(player,mapa_ground) && !FlxG.overlap(player,escalera)){
-		player.acceleration.y = 850;
-	   }
-	   FlxG.collide(player,pared);
-	   FlxG.collide(perro,pared);
-	   FlxG.collide(perro,mapa_ground);
-	   FlxG.collide(perro2,mapa_ground);
-	   FlxG.collide(perro,crate);
-	   FlxG.collide(perro2, crate);
 	   
-	   FlxG.collide(mapa_ground,crate);
-	   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
-		
-			if(FlxG.keys.pressed("RIGHT")){
-				crate.x+=0.5;
-			}
-			if(FlxG.keys.pressed("LEFT")){
-				crate.x-=0.5;
-			}
-	   }
-	   if(FlxG.overlap(player,escalera)){
-		player.play("climb");
-			if(FlxG.keys.pressed("UP")){
-				player.acceleration.y=0;
-				player.velocity.y=0;
-				
-				player.y-=2;
-				visores.y=player.y-100;
-			}
-			if(FlxG.keys.pressed("DOWN")){
-				player.acceleration.y=0;
-				player.velocity.y=0;
-			
-				player.y+=2;
-			}
-	   }
-	  	if(FlxG.collide(player,trampadelmal)){
-			player.acceleration.y+=200;
-			player.maxAngular=400;
-			player.angularAcceleration=200;
-			escalera.kill();
-			perro2.kill;
-			 //FlxG.collide(player,perro2)==false;			
-			
-	   }
-	   if(player.angularVelocity>200 ){
-		visores.y=250
-		player.kill();
-		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
-         add(texto);
-		 
-		 FlxG.switchState(new PreNivel1());
-	   }
-	   if( FlxG.collide(perro,player)){
-		player.kill();
-		FlxG.switchState(new Tutorial());
-			   
-		
-	   }
-	    if( FlxG.collide(perro2,player) && !player.angularVelocity >100){
-		player.kill();
-		FlxG.switchState(new Tutorial());
-		
-			
-		 }
-		
-	   }
 	  
 	   
 	   
@@ -271,6 +208,6 @@ package {
 	   
 			
 		}
-	
+	}	
 	
 }

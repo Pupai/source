@@ -10,9 +10,9 @@ package {
 			this.x=10;
 			this.y=20;
 			this.acceleration.y=0;
-			this.velocity.x=200;
+			this.velocity.x=300;
 			this.exists = false;
-			makeGraphic(10, 10);
+			makeGraphic(5, 5);
 			
 		}
 		override public function update():void{
