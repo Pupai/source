@@ -10,12 +10,14 @@
 		[Embed(source = 'spritesheet.png')] public static var sheet:Class;
 		
 		var bandera:Boolean = false;
+		var tiempo:Number=0;
+		var bosshurt:Boolean=false;
 		
-		public function Jugador()
+		public function Jugador(x:Number, y:Number)
 
 		{
 
-		super(0,410);
+		super(x,y);
 		loadGraphic(sheet, true, true,28, 42, true);
 
 		//frame para que empiece con cierto frame
@@ -30,7 +32,7 @@
 
 		}
 		
-		public function pelea(a:Perro){
+		public function pelea(a:FlxSprite){
 			if(this.y+26<a.y){
 				trace(this.y,a.y);
 				a.kill();
@@ -52,6 +54,42 @@
 					this.y-=20;		
 				}
 			}
+		
+		}
+		public function bossFight(a:Jefe):Boolean{
+			if(this.y+20<a.y){
+				bosshurt=true;
+				trace(this.y,a.y);
+				a.hurt(10);
+				if(this.facing == FlxObject.RIGHT){
+					//trace("derecha");
+					this.x+=50;
+					this.y-=50;			
+				}
+				if(this.facing == FlxObject.LEFT){
+					//trace("izquierda");	
+					this.x-=50;
+					this.y-=50;		
+				}				
+				
+			}
+			else{
+				this.hurt(20);
+				this.bandera=true;
+				bosshurt=false;
+				//trace("en player "+this.bandera);
+				if(this.facing == FlxObject.RIGHT){
+					//trace("derecha");
+					this.x-=20;
+					this.y-=20;			
+				}
+				if(this.facing == FlxObject.LEFT){
+					//trace("izquierda");	
+					this.x+=20;
+					this.y-=20;		
+				}
+			}
+			return bosshurt;
 		
 		}
 	}

@@ -107,13 +107,7 @@ package {
 		var paused:Boolean=true;
 		var bullet:Globo;
 		var globiza:FlxGroup;
-		var bool:Boolean=false;
-		var dir:Boolean=false;
-		var bossmove:Number=0;
-		var bosshurt:Boolean=false;
-		var addboss:Boolean=false;
-		var tiempo:Number=0;
-		
+		var c:Number=0;
 		 public function Nivel1()
         {
             super();
@@ -262,13 +256,14 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(100,410);
+		   player = new Jugador();
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
 		   trace(player.bandera);
 		   
 		   boss = new Jefe();
+		   add(boss);
 		   
 		   perro= new Perro();
 		   perro.x=130;
@@ -431,6 +426,9 @@ package {
 		   FlxG.collide(boss,mapa_edificio);
 		   //collide de un lado!!
 		   FlxG.collide(boss,mapa_escritorios);
+		   
+		   FlxG.collide(boss,pared);
+		   FlxG.collide(boss,mapa_ground);
 		   FlxG.collide(boss,mapa_edificio);
 		   
 		   FlxG.collide(perro,pared);
@@ -519,102 +517,38 @@ package {
 			player.pelea(perro3_ed);
 			bajarVida();
 		   }
-		   if(FlxG.overlap(boss,player) && !FlxG.collide(player,casa)){
-			trace("tiempo: "+tiempo);
-			if(tiempo==0){
-			bosshurt=player.bossFight(boss);
-			tiempo++;
-			bajarVida();
-			}
-			
-		   }
-		   trace("tiempo: "+tiempo);
-		   if (tiempo>0 && tiempo<100){
-				bosshurt=true;
-				tiempo++;
-			}
-			else {
-				tiempo=0;
-				bosshurt=false;
-			}
 		  
-		  trace("boss health: "+boss.health);
+		  
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
 		   }
-		    if(FlxG.collide (player, boton) && FlxG.keys.pressed("S")){
-				addboss=true;
+		    if(FlxG.collide (player, boton)){
 				trace("activar boss");				
 		   }
-		   if(addboss){
-			add(boss);
-		   }
-		  if(FlxG.overlap(bullet,player)){
-					player.pelea(bullet);
-					bajarVida();
+		    boss.play("runleft");
+			var bool:Boolean=false;
+			
+			if(boss.y>300){
+				if(c<500){
+					boss.play("runright");
+					boss.move("runright");
+					c++;
 				}
-		 	if(FlxG.collide(boss,mapa_ground)){
-				
-		if(bossmove<120){
-			bossmove++;
-			if(bossmove>=50 && bossmove<=55){
-				trace("pew");
-			   	bool=true;
-				boss.shoot(bool,"attackright");
-				bullet= Globo(globiza.getFirstAvailable());
+				else if(c>=500 && c<1000){
+					boss.play("runleft");
+					boss.move("runleft");
+					c++;
+				}
+			}
+	   if(FlxG.keys.pressed("S")){
+			bool=true;
+			boss.shoot(bool,"attackright");
+			bullet= Globo(globiza.getFirstAvailable());
 				bullet.x=boss.x+55;
 				bullet.y=boss.y+54;
 				bullet.exists=true;
-				
-			}
-			else if(bosshurt){
-				boss.play("hurtright");
-			}
-			else{
-				if(boss.x<300){
-					boss.move("runright");
-					dir=false;
-				}
-				else {
-					bossmove=120;
-				}
-
-			}
-	   }	
-	   else if(bossmove<220){
 		
-		if(boss.x>0){
-			trace("no collidea. hurt: "+bosshurt);
-			bossmove++;
-			if(bosshurt){
-				boss.play("hurtleft");
-			}
-			else{
-				boss.move("runleft");
-				dir=true;
-
-			}
 		}
-		else {
-			trace("collidea. hurt: "+bosshurt);
-			bossmove=0;
-		}
-		
-	   }
-	   
-		else {
-			bossmove=0;
-			if(!dir){
-				boss.play("right");
-			}
-			else {
-				boss.play("left");
-			}
-			
-	   }
-	   }
-			
-			
 		
 	   }
 			
