@@ -181,7 +181,7 @@ package {
 		   piso.makeGraphic(2250, 2);
 		   add(piso);
 		 
-		   player = new Jugador();
+		   player = new Jugador(500,0);
 		   player.x=2050;
 		   player.y=0;
 		   add(player);

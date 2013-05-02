@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxU;
 	import org.flixel.system.FlxTile;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
@@ -112,7 +113,10 @@ package {
 		var bossmove:Number=0;
 		var bosshurt:Boolean=false;
 		var addboss:Boolean=false;
-		var tiempo:Number=0;
+		var bosstime:Number=0;
+		var timeRemaining:Number = 0; // in seconds
+		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		
 		
 		 public function Nivel1()
         {
@@ -333,11 +337,20 @@ package {
 				player.bandera=false;
 			}
 		}
+		public function tiempo():void{
+		 timeRemaining += FlxG.elapsed;
+    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
+		 timeRemainingDisplay.scrollFactor.x=0;
+		 timeRemainingDisplay.scrollFactor.y=0;
+		 		 
+		 add(timeRemainingDisplay);
+		
+		}
 	
 		override public function update():void{
 		
 	       super.update();
-		   
+		   tiempo();   
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -520,21 +533,21 @@ package {
 			bajarVida();
 		   }
 		   if(FlxG.overlap(boss,player) && !FlxG.collide(player,casa)){
-			trace("tiempo: "+tiempo);
-			if(tiempo==0){
+			trace("bosstime: "+bosstime);
+			if(bosstime==0){
 			bosshurt=player.bossFight(boss);
-			tiempo++;
+			bosstime++;
 			bajarVida();
 			}
 			
 		   }
-		   trace("tiempo: "+tiempo);
-		   if (tiempo>0 && tiempo<100){
+		   trace("bosstime: "+bosstime);
+		   if (bosstime>0 && bosstime<100){
 				bosshurt=true;
-				tiempo++;
+				bosstime++;
 			}
 			else {
-				tiempo=0;
+				bosstime=0;
 				bosshurt=false;
 			}
 		  
@@ -548,6 +561,9 @@ package {
 		   }
 		   if(addboss){
 			add(boss);
+		   }
+		   if(boss.health==0){
+			FlxG.switchState(new HighScore());
 		   }
 		  if(FlxG.overlap(bullet,player)){
 					player.pelea(bullet);
