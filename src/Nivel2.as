@@ -181,9 +181,10 @@ package {
 		   piso.makeGraphic(2250, 2);
 		   add(piso);
 		 
-		   player = new Jugador();
+		   player = new Jugador(100,410);
 		   player.x=2050;
 		   player.y=0;
+		   
 		   add(player);
 		   trace(player.bandera);
 	
