@@ -59,6 +59,10 @@ package {
 		
 		private var pico1: FlxSprite;
 		private var pico2: FlxSprite;
+		private var pico3: FlxSprite;
+		private var pico4: FlxSprite;
+		private var pico5: FlxSprite;
+		private var pico6: FlxSprite;
 		
 		private var pipe_s1: FlxSprite;
 		private var agua_s1: FlxSprite;
@@ -66,8 +70,20 @@ package {
 		private var agua_d1: FlxSprite;
 		
 		private var plat1: FlxSprite;
+		private var plat2: FlxSprite;
+		private var plat3: FlxSprite;
+		private var plat4: FlxSprite;
+		private var plat5:FlxSprite;
 		
+				
 		private var puente1: FlxSprite;
+		private var puente2: FlxSprite;
+		private var puente3: FlxSprite;
+		private var puente4: FlxSprite;
+		private var puente5: FlxSprite;
+		private var puente6: FlxSprite;
+		private var puente7: FlxSprite;
+		private var puente8: FlxSprite;
 		
 		private var entrada: FlxSprite;
 		private var entrada_gips:FlxTileblock;
@@ -108,6 +124,22 @@ package {
 		   pico2.immovable=true;
 		   add(pico2);
 		   
+		   pico3=new FlxSprite(1700,350,pico_image);
+		   pico3.immovable=true;
+		   add(pico3);
+		   
+		   pico4=new FlxSprite(1650,350,pico_image);
+		   pico4.immovable=true;
+		   add(pico4);
+		   
+		   pico5=new FlxSprite(1500,350,pico_image);
+		   pico5.immovable=true;
+		   add(pico5);
+		   
+		   pico6=new FlxSprite(1550,350,pico_image);
+		   pico6.immovable=true;
+		   add(pico6);
+		   
 		   //PIPES
 		   pipe_s1=new FlxSprite(900,472,pipe_s_image);
 		   pipe_s1.immovable=true;
@@ -128,10 +160,56 @@ package {
 		   plat1.immovable=true;
 		   add(plat1);
 		   
+		   plat2=new FlxSprite(460,1057,plataforma_image);
+		   plat2.immovable=true;
+		   add(plat2);
+		   
+		   plat3=new FlxSprite(560,1057,plataforma_image);
+		   plat3.immovable=true;
+		   add(plat3);
+		   
+		   plat4=new FlxSprite(660,1057,plataforma_image);
+		   plat4.immovable=true;
+		   add(plat4);
+		   
+		   plat5=new FlxSprite(760,1057,plataforma_image);
+		   plat5.immovable=true;
+		   add(plat5);
+		   
+		  
+		   
 		   //PUENTE
 		   puente1=new FlxSprite(1215,1056,puente_image);
 		   puente1.immovable=true;
 		   add(puente1);
+		   
+		   puente2=new FlxSprite(1265,1056,puente_image);
+		   puente2.immovable=true;
+		   add(puente2);
+		   
+		   puente3=new FlxSprite(1315,1056,puente_image);
+		   puente3.immovable=true;
+		   add(puente3);
+		   
+		   puente4=new FlxSprite(1365,1056,puente_image);
+		   puente4.immovable=true;
+		   add(puente4);
+		   
+		   puente5=new FlxSprite(1415,1056,puente_image);
+		   puente5.immovable=true;
+		   add(puente5);
+		   
+		   puente6=new FlxSprite(1465,1056,puente_image);
+		   puente6.immovable=true;
+		   add(puente6);
+		   
+		   puente7=new FlxSprite(1515,1056,puente_image);
+		   puente7.immovable=true;
+		   add(puente7);
+		   
+		   puente8=new FlxSprite(1565,1056,puente_image);
+		   puente8.immovable=true;
+		   add(puente8);
 		   
 		    //ENTRADA
 		   entrada=new FlxSprite(2070,1002,entrada_image);
@@ -263,18 +341,125 @@ package {
 					player.x-=2;
 				}		
 		   }
+		   //picos 
+		   if(player.x<pico1.x){
+			pico1.immovable==false;
+			pico1.y+=5;
+		   }
+		   if(player.x<pico2.x){
+			pico2.immovable==false;
+			pico2.y+=5;
+		   }
+		   if(player.x<pico3.x){
+			pico3.immovable==false;
+			pico3.y+=5;
+		   }
+		   if(player.x<pico4.x){
+			pico4.immovable==false;
+			pico4.y+=5;
+		   }
+		   if(player.x<pico5.x){
+			pico5.immovable==false;
+			pico5.y+=5;
+		   }
+		   if(player.x<pico6.x){
+			pico6.immovable==false;
+			pico6.y+=5;
+		   }
+		   
+		   
 		   
 		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground)){
 				player.acceleration.y = 850;
 		   }
-		    
+		   //colillides 
 		   FlxG.collide(player,mapa_ground);
 		   FlxG.collide(perro,mapa_ground);
 		   FlxG.collide(player,agua_s1);
 		   FlxG.collide(player,agua_d1);
 		   
 		   FlxG.collide(player,plat1);
+		   FlxG.collide(player,plat2);
+		   FlxG.collide(player,plat3);
+		   FlxG.collide(player,plat4);
+		   FlxG.collide(player,plat5);
+		   
+		   //colide de picos
+		   if(FlxG.overlap(pico1,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico1.kill();
+			 
+		   }
+		   
+		    if(FlxG.overlap(pico2,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico2.kill();
+			 
+		   }
+		   
+		    if(FlxG.overlap(pico3,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico3.kill();
+			 
+		   }
+		   
+		    if(FlxG.overlap(pico4,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico4.kill();
+			 
+		   }
+		   
+		    if(FlxG.overlap(pico5,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico5.kill();
+			 
+		   }
+		   
+		    if(FlxG.overlap(pico6,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico6.kill();
+			 
+		   }
+		   //collide del puente
+		   if(FlxG.collide(player,puente1)){
+			puente1.y+=10;
+		   }
+		   if(FlxG.collide(player,puente2)){
+			puente2.y+=10;
+		   }
+		   if(FlxG.collide(player,puente3)){
+			puente3.y+=10;
+		   }
+		   if(FlxG.collide(player,puente4)){
+			puente4.y+=10;
+		   }
+		   if(FlxG.collide(player,puente5)){
+			puente5.y+=10;
+		   }
+		   if(FlxG.collide(player,puente6)){
+			puente6.y+=10;
+		   }
+		   if(FlxG.collide(player,puente7)){
+			puente7.y+=10;
+		   }
+		   if(FlxG.collide(player,puente8)){
+			puente8.y+=10;
+		   }
+		   
+		  
 		   
 		  
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
@@ -283,6 +468,7 @@ package {
 		   if(FlxG.collide(player,entrada_gips)){
 				FlxG.switchState(new PreNivel3());
 		   }
+		  }
 		   
 		
 	   }
@@ -290,4 +476,3 @@ package {
 	}
 	
 	
-}
