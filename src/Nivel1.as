@@ -63,6 +63,10 @@ package {
 		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
+		private var paredcrate2:FlxTileblock;
+		private var paredcrate:FlxTileblock;
+		private var pared_ed:FlxTileblock;
+		
 		private var escalera_ed:FlxTileblock;
 		private var escalera_ed1E:FlxTileblock;
 		private var escalera_12:FlxTileblock;
@@ -180,13 +184,28 @@ package {
 		   boton.immovable=true;
 		   add(boton);
 		   
-		   crate=new Item("crate",45,32,940,777);
+		   crate=new Item("crate",45,32,930,777);
 		   crate.acceleration.y=1000;
 		   add(crate);
 		   
 		   crate2=new Item("crate",45,32,150,760);
 		   crate2.acceleration.y=1000;
 		   add(crate2);
+		   
+		   paredcrate2 = new FlxTileblock(125, 790, 2, 50);
+		   paredcrate2.alpha=0;
+		   paredcrate2.makeGraphic(2, 50);
+		   add(paredcrate2);
+		   
+		   paredcrate = new FlxTileblock(880, 780, 2, 50);
+		   paredcrate.alpha=0;
+		   paredcrate.makeGraphic(2, 50);
+		   add(paredcrate);
+		   
+		   pared_ed = new FlxTileblock(2022, 0, 2, 200);
+		   pared_ed.alpha=0;
+		   pared_ed.makeGraphic(2, 200);
+		   add(pared_ed);
 		   
 		   //x, y, width, height
 		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
@@ -201,7 +220,7 @@ package {
 		   add(escalera_45);
 		   
 		   escalera_ed1E= new FlxTileblock(1800, 190, 44, 29);
-		   escalera_ed1E.alpha=100;
+		   escalera_ed1E.alpha=0;
 		   escalera_ed1E.makeGraphic(44, 29);
 		   add(escalera_ed1E);
 		   
@@ -442,7 +461,8 @@ package {
 		   FlxG.collide(perro3,mapa_ground);
 		   FlxG.collide(perro3_ed,mapa_edificio);
 		   FlxG.collide(perro3_ed,tapa);
-		   		   
+		   
+		   FlxG.collide(pared_ed,player);	   
 		   
 		   FlxG.collide(carro,player);
 		   FlxG.collide(tapa,player);
@@ -450,7 +470,6 @@ package {
 		   FlxG.collide(roca,player);
 		   FlxG.collide(crate,mapa_ground);
 		   FlxG.collide(crate2,mapa_ground);
-		   FlxG.collide(crate2,pared);
 	   
 		   //mover la caja cercana al carro
 		   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
@@ -460,7 +479,9 @@ package {
 				if(FlxG.keys.pressed("LEFT")){
 					crate.x-=0.5;
 				}
-				FlxG.collide(carro,crate);	
+				FlxG.collide(carro,crate);
+				FlxG.collide(crate,paredcrate);	
+				
 		   }
 		   
 		   //mover caja cercana a la casa
@@ -473,6 +494,7 @@ package {
 					crate2.x-=0.5;
 				}
 				FlxG.collide(casa,crate2);
+				FlxG.collide(crate2,paredcrate2);
 		   }
 		   
 		   // subir escalera

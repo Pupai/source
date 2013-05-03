@@ -264,7 +264,6 @@ package {
 		   player.y=0;
 		   
 		   add(player);
-		   trace(player.bandera);
 	
 		   //mundo de 50 x 40 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2250,1280);
