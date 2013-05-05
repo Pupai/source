@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxU;
 	import org.flixel.system.FlxTile;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
@@ -23,7 +24,7 @@ package {
 	
 	
 	public class Nivel2 extends FlxState{
-		
+		[Embed(source = 'nivel2.mp3')] private var sound:Class;
 		[Embed(source = "Nivel2\\sewer_ground.png")] public static var groundTiles:Class;
 		[Embed(source = "Nivel2\\top_sewer.png")] public static var topTiles:Class;
 		[Embed(source = "Nivel2\\puente.png")] public static var puente_image:Class;
@@ -50,6 +51,14 @@ package {
 		private var bar60_80: FlxSprite;
 		
 		private var perro:Perro;
+		private var perro1:Perro;
+		private var perro2:Perro;
+		private var perro3:Perro;
+		private var perro4:Perro;
+		private var perro5:Perro;
+		
+		
+				
 		private var camera:FlxCamera;
 		
 		private var  mapa_ground:FlxTilemap;
@@ -87,6 +96,10 @@ package {
 		
 		private var entrada: FlxSprite;
 		private var entrada_gips:FlxTileblock;
+		
+		var timeRemaining:Number = 0; // in seconds
+		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		
 
 		var counter : int=0;
 		
@@ -141,14 +154,14 @@ package {
 		   add(pico6);
 		   
 		   //PIPES
-		   pipe_s1=new FlxSprite(900,472,pipe_s_image);
+		   pipe_s1=new FlxSprite(900,476,pipe_s_image);
 		   pipe_s1.immovable=true;
 		   add(pipe_s1);
 		   agua_s1=new FlxSprite(901,488,agua_s_image);
 		   agua_s1.immovable=true;
 		   add(agua_s1);
 		   
-		   pipe_d1=new FlxSprite(800,472,pipe_d_image);
+		   pipe_d1=new FlxSprite(800,476,pipe_d_image);
 		   pipe_d1.immovable=true;
 		   add(pipe_d1);
 		   agua_d1=new FlxSprite(801,488,agua_d_image);
@@ -222,9 +235,31 @@ package {
 		   
 		   
 		   perro= new Perro();
-		   perro.x=1050;
-		   perro.y=1010;
+		   perro.x=1632;
+		   perro.y=1014;
 		   add(perro);
+		   
+		   perro1= new Perro();
+		   perro1.x=2032;
+		   perro1.y=1014;
+		   add(perro1);
+		   
+		   perro2= new Perro();
+		   perro2.x=1732;
+		   perro2.y=1014;
+		   add(perro2);
+		   
+		   perro3= new Perro();
+		   perro3.x=1832;
+		   perro3.y=1014;
+		   add(perro3);
+		   
+		   perro4= new Perro();
+		   perro4.x=1932;
+		   perro4.y=1014;
+		   add(perro4);
+		   
+		   
 		   
 		   
 		   lifebar=new FlxSprite(5,5,barra_image);
@@ -232,6 +267,8 @@ package {
 		   lifebar.scrollFactor.y=0;
 		   add(lifebar);
 		   
+		   
+		   		   
 		   //Vida de Pupai
 		   bar0_20=new FlxSprite(53,18,vida_image);
 		   bar0_20.scrollFactor.x=0;
@@ -259,11 +296,10 @@ package {
 		   piso.makeGraphic(2250, 2);
 		   add(piso);
 		 
-		   player = new Jugador(100,410);
-		   player.x=2050;
-		   player.y=0;
+		   player = new Jugador(2050,0);
 		   
 		   add(player);
+		   trace(player.bandera);
 	
 		   //mundo de 50 x 40 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2250,1280);
@@ -299,11 +335,22 @@ package {
 				player.bandera=false;
 			}
 		}
+		
+		public function time():void{
+		 timeRemaining += FlxG.elapsed;
+    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
+		 timeRemainingDisplay.scrollFactor.x=0;
+		 timeRemainingDisplay.scrollFactor.y=0;
+		 		 
+		 add(timeRemainingDisplay);
+		
+		}
 	
 		override public function update():void{
 		
 	       super.update();
-		   
+		   		time();
+				FlxG.play(sound,.2);
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -313,6 +360,40 @@ package {
 				//texto.revive();
 				return;
 					}
+		   //movimiento perros
+		   if(perro.x<=1732 && swap==true){
+				perro.x--;
+				perro1.x--;
+				perro2.x--;
+				perro3.x--;
+				perro4.x--;
+				perro.play("left");
+				perro1.play("left");
+				perro2.play("left");
+				perro3.play("left");
+				perro4.play("left");
+				if(perro.x==1632){
+					swap=false;
+				}
+		   }
+		   //mover perro hoyo
+		   if(perro.x>=1632 && swap==false){
+				perro.x++;
+				perro1.x++;
+				perro2.x++;
+				perro3.x++;
+				perro4.x++;
+				perro.play("right");
+				perro1.play("right");
+				perro2.play("right");
+				perro3.play("right");
+				perro4.play("right");
+				if(perro.x==1732){
+					swap=true;
+				}
+		   }
+		   
+		   
 		   
 		   //Movimientos Pupai
 		   if(FlxG.keys.pressed("RIGHT")){
@@ -375,8 +456,29 @@ package {
 		   //colillides 
 		   FlxG.collide(player,mapa_ground);
 		   FlxG.collide(perro,mapa_ground);
-		   FlxG.collide(player,agua_s1);
-		   FlxG.collide(player,agua_d1);
+		   FlxG.collide(perro1,mapa_ground);
+		   FlxG.collide(perro2,mapa_ground);
+		   FlxG.collide(perro3,mapa_ground);
+		   FlxG.collide(perro4,mapa_ground);
+		   
+		   if(FlxG.overlap(player,agua_s1)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			player.x+=20;
+			
+		   }
+		   if(FlxG.overlap(player,agua_d1)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			player.x+=20;
+			
+		   }
+		   
+		   FlxG.collide(player,pipe_d1);
+		   FlxG.collide(player,pipe_s1);
+		   
 		   
 		   FlxG.collide(player,plat1);
 		   FlxG.collide(player,plat2);
@@ -457,6 +559,30 @@ package {
 		   if(FlxG.collide(player,puente8)){
 			puente8.y+=10;
 		   }
+		   
+		   // pelea con perrorros
+		    if(FlxG.overlap(perro2,player)){
+			player.pelea(perro2);
+			bajarVida();			
+		   }
+		   if(FlxG.overlap(perro,player)){
+			player.pelea(perro);
+			bajarVida();
+		   }
+		   if(FlxG.overlap(perro3,player)){
+			player.pelea(perro3);
+			bajarVida();
+		   }
+		   
+		   if(FlxG.overlap(perro4,player)){
+			player.pelea(perro4);
+			bajarVida();
+		   }
+		   if(FlxG.overlap(perro1,player)){
+			bajarVida();
+		   }
+		   
+		  
 		   
 		  
 		   

@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxU;
 	import org.flixel.system.FlxTile;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
@@ -23,7 +24,7 @@ package {
 	
 	
 	public class Nivel1 extends FlxState{
-		
+		[Embed(source = 'nivel1.mp3')] private var sound:Class;
 		[Embed(source = "Nivel 1\\edificio_rojo.png")] public static var edificioTiles:Class;
 		[Embed(source = "Nivel 1\\escritorio.png")] public static var escritorioTiles:Class;
 		[Embed(source = "Nivel 1\\fondo_edificio.png")] public static var fondo_edificioTiles:Class;
@@ -78,6 +79,9 @@ package {
 		private var crate:Item;
 		private var crate2:Item;
 
+		var timeRemaining:Number = 0; // in seconds
+		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		
 		
 		private var  mapa_edificio:FlxTilemap;
 		private var  mapa_top_ground:FlxTilemap;
@@ -102,6 +106,7 @@ package {
 		private var bar60_80: FlxSprite;
 		
 		var counter : int=0;
+		
 		
 		
 		var _jump:Number = 0;
@@ -246,7 +251,8 @@ package {
 		   
 		   //cuando el boss se muera mover tapa para que Pupai baje por escaleras
 		   tapa=new FlxSprite(1666,832,tapa_image);
-		   tapa.immovable=true;
+		   tapa.immovable=false;
+		 
 		   add(tapa);
 		   
 		   lifebar=new FlxSprite(5,5,barra_image);
@@ -281,7 +287,7 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(100,410);
+		   player = new Jugador(0,770);
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
@@ -291,17 +297,17 @@ package {
 		   
 		   perro= new Perro();
 		   perro.x=130;
-		   perro.y=600;
+		   perro.y=770;
 		   add(perro);
 		   
 		   perro2= new Perro();
 		   perro2.x=650;
-		   perro2.y=370;
+		   perro2.y=820;
 		   add(perro2);
 		   
 		   perro3= new Perro();
 		   perro3.x=770;
-		   perro3.y=370;
+		   perro3.y=820;
 		   add(perro3);  
 		   
 		   perro_ed= new Perro();
@@ -352,11 +358,34 @@ package {
 				player.bandera=false;
 			}
 		}
+		
+		public function time():void{
+		 timeRemaining += FlxG.elapsed;
+    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
+		 timeRemainingDisplay.scrollFactor.x=0;
+		 timeRemainingDisplay.scrollFactor.y=0;
+		 		 
+		 add(timeRemainingDisplay);
+		
+		}
 	
 		override public function update():void{
 		
 	       super.update();
+		   trace(player.y);
 		   
+		   time();
+		   FlxG.play(sound,.2);
+		   
+		   if( player.y>930){
+			
+			FlxG.switchState(new Nivel2());
+			
+		   }
+		   
+		   if(boss.health==0){
+		   tapa.immovable=true;
+		   }
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
