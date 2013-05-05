@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxU;
 	import flash.net.dns.AAAARecord;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxRect;
@@ -48,6 +49,10 @@ package {
 		private var musica:FlxG= new FlxG();
 		var counter : int=0;
 		
+		var timeRemaining:Number = 0; // in seconds
+		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		
+		
 		
 		var _jump:Number = 0;
 		var swap:Boolean=false;
@@ -68,6 +73,8 @@ package {
 			mapa_top.loadMap(new Top(), topTiles,45,32);
          	add(mapa_top);
          	
+			
+			
 			
 			mapa_items =  new FlxTilemap();
 			mapa_items.loadMap(new Items(), itemsTiles,45,32);
@@ -99,7 +106,7 @@ package {
 		   add(crate);
 		   add(visores);
 		  
-		   player = new Jugador(0,410);
+		   player = new Jugador(0,370);
 		   
 		   add(player);
 		   
@@ -122,11 +129,23 @@ package {
 		   FlxG.worldBounds=new FlxRect(0,0,765,544);
 		   
 		}
+		
+		public function time():void{
+		 timeRemaining += FlxG.elapsed;
+    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
+		 timeRemainingDisplay.scrollFactor.x=0;
+		 timeRemainingDisplay.scrollFactor.y=0;
+		 		 
+		 add(timeRemainingDisplay);
+		
+		}
 			
 		override public function update():void
     {
 		
        super.update();
+	   
+	   time();
 	   
 	   FlxG.play(sound,.2);
 	   visores.x=player.x-10;
@@ -245,19 +264,16 @@ package {
 		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
          add(texto);
 		 
-		 FlxG.switchState(new PreNivel1());
+		 FlxG.switchState(new Nivel1());
 	   }
-	   if( FlxG.collide(perro,player)){
-		player.kill();
-		FlxG.switchState(new Tutorial());
-			   
-		
-	   }
-	    if( FlxG.collide(perro2,player) && !player.angularVelocity >100){
-		player.kill();
-		FlxG.switchState(new Tutorial());
-		
-			
+	   
+	    if(FlxG.overlap(perro2,player)){
+			player.pelea(perro2);
+
+		 }
+		 if(FlxG.overlap(perro,player)){
+			player.pelea(perro);
+
 		 }
 		
 	   }

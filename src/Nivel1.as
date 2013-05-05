@@ -24,7 +24,7 @@ package {
 	
 	
 	public class Nivel1 extends FlxState{
-		
+		[Embed(source = 'nivel1.mp3')] private var sound:Class;
 		[Embed(source = "Nivel 1\\edificio_rojo.png")] public static var edificioTiles:Class;
 		[Embed(source = "Nivel 1\\escritorio.png")] public static var escritorioTiles:Class;
 		[Embed(source = "Nivel 1\\fondo_edificio.png")] public static var fondo_edificioTiles:Class;
@@ -64,6 +64,10 @@ package {
 		private var perro3_ed:Perro;
 	
 		private var pared:FlxTileblock;
+		private var paredcrate2:FlxTileblock;
+		private var paredcrate:FlxTileblock;
+		private var pared_ed:FlxTileblock;
+		
 		private var escalera_ed:FlxTileblock;
 		private var escalera_ed1E:FlxTileblock;
 		private var escalera_12:FlxTileblock;
@@ -75,6 +79,9 @@ package {
 		private var crate:Item;
 		private var crate2:Item;
 
+		var timeRemaining:Number = 0; // in seconds
+		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		
 		
 		private var  mapa_edificio:FlxTilemap;
 		private var  mapa_top_ground:FlxTilemap;
@@ -99,6 +106,7 @@ package {
 		private var bar60_80: FlxSprite;
 		
 		var counter : int=0;
+		
 		
 		
 		var _jump:Number = 0;
@@ -184,13 +192,28 @@ package {
 		   boton.immovable=true;
 		   add(boton);
 		   
-		   crate=new Item("crate",45,32,940,777);
+		   crate=new Item("crate",45,32,930,777);
 		   crate.acceleration.y=1000;
 		   add(crate);
 		   
 		   crate2=new Item("crate",45,32,150,760);
 		   crate2.acceleration.y=1000;
 		   add(crate2);
+		   
+		   paredcrate2 = new FlxTileblock(125, 790, 2, 50);
+		   paredcrate2.alpha=0;
+		   paredcrate2.makeGraphic(2, 50);
+		   add(paredcrate2);
+		   
+		   paredcrate = new FlxTileblock(880, 780, 2, 50);
+		   paredcrate.alpha=0;
+		   paredcrate.makeGraphic(2, 50);
+		   add(paredcrate);
+		   
+		   pared_ed = new FlxTileblock(2022, 0, 2, 200);
+		   pared_ed.alpha=0;
+		   pared_ed.makeGraphic(2, 200);
+		   add(pared_ed);
 		   
 		   //x, y, width, height
 		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
@@ -205,7 +228,7 @@ package {
 		   add(escalera_45);
 		   
 		   escalera_ed1E= new FlxTileblock(1800, 190, 44, 29);
-		   escalera_ed1E.alpha=100;
+		   escalera_ed1E.alpha=0;
 		   escalera_ed1E.makeGraphic(44, 29);
 		   add(escalera_ed1E);
 		   
@@ -231,7 +254,8 @@ package {
 		   
 		   //cuando el boss se muera mover tapa para que Pupai baje por escaleras
 		   tapa=new FlxSprite(1666,832,tapa_image);
-		   tapa.immovable=true;
+		   tapa.immovable=false;
+		 
 		   add(tapa);
 		   
 		   lifebar=new FlxSprite(5,5,barra_image);
@@ -266,7 +290,7 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(100,410);
+		   player = new Jugador(0,770);
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
@@ -276,17 +300,17 @@ package {
 		   
 		   perro= new Perro();
 		   perro.x=130;
-		   perro.y=600;
+		   perro.y=770;
 		   add(perro);
 		   
 		   perro2= new Perro();
 		   perro2.x=650;
-		   perro2.y=370;
+		   perro2.y=820;
 		   add(perro2);
 		   
 		   perro3= new Perro();
 		   perro3.x=770;
-		   perro3.y=370;
+		   perro3.y=820;
 		   add(perro3);  
 		   
 		   perro_ed= new Perro();
@@ -337,7 +361,12 @@ package {
 				player.bandera=false;
 			}
 		}
+<<<<<<< HEAD
 		public function tiempo():void{
+=======
+		
+		public function time():void{
+>>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
 		 timeRemaining += FlxG.elapsed;
     	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
 		 timeRemainingDisplay.scrollFactor.x=0;
@@ -350,7 +379,24 @@ package {
 		override public function update():void{
 		
 	       super.update();
+<<<<<<< HEAD
 		   tiempo();   
+=======
+		   trace(player.y);
+		   
+		   time();
+		   FlxG.play(sound,.2);
+		   
+		   if( player.y>930){
+			
+			FlxG.switchState(new Nivel2());
+			
+		   }
+		   
+		   if(boss.health==0){
+		   tapa.immovable=true;
+		   }
+>>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -455,7 +501,8 @@ package {
 		   FlxG.collide(perro3,mapa_ground);
 		   FlxG.collide(perro3_ed,mapa_edificio);
 		   FlxG.collide(perro3_ed,tapa);
-		   		   
+		   
+		   FlxG.collide(pared_ed,player);	   
 		   
 		   FlxG.collide(carro,player);
 		   FlxG.collide(tapa,player);
@@ -463,7 +510,6 @@ package {
 		   FlxG.collide(roca,player);
 		   FlxG.collide(crate,mapa_ground);
 		   FlxG.collide(crate2,mapa_ground);
-		   FlxG.collide(crate2,pared);
 	   
 		   //mover la caja cercana al carro
 		   if(FlxG.collide(crate,player) && !FlxG.collide(mapa_ground,crate)){
@@ -473,7 +519,9 @@ package {
 				if(FlxG.keys.pressed("LEFT")){
 					crate.x-=0.5;
 				}
-				FlxG.collide(carro,crate);	
+				FlxG.collide(carro,crate);
+				FlxG.collide(crate,paredcrate);	
+				
 		   }
 		   
 		   //mover caja cercana a la casa
@@ -486,6 +534,7 @@ package {
 					crate2.x-=0.5;
 				}
 				FlxG.collide(casa,crate2);
+				FlxG.collide(crate2,paredcrate2);
 		   }
 		   
 		   // subir escalera
