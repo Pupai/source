@@ -122,7 +122,8 @@ package {
          
            add(texto);
 		   
-		   
+		   		   FlxG.playMusic(sound);
+		  
 		   //camera=new FlxCamera(-100, 100, 770, 544);
 		   FlxG.camera.setBounds(0,0,765,544);
 		   FlxG.camera.follow(player);
@@ -147,7 +148,6 @@ package {
 	   
 	   time();
 	   
-	   FlxG.play(sound,.2);
 	   visores.x=player.x-10;
 	   texto.x=visores.x+20;
 	   visores.play("move")

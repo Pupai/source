@@ -329,6 +329,8 @@ package {
 				globiza.add(bullet);
 		   }
 		   add(globiza);
+		    FlxG.playMusic(sound);
+		   
 		   //mundo de 45 x 30 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2025,960);
 		   FlxG.camera.follow(player);
@@ -375,15 +377,14 @@ package {
 		   trace(player.y);
 		   
 		   time();
-		   FlxG.play(sound,.2);
 		   
 		   if( player.y>930){
 			
-			FlxG.switchState(new PreNivel2());
+			FlxG.switchState(new Nivel2());
 			
 		   }
 		   
-		   if(boss.health==0){
+		   if(boss.health==0 && addboss==true){
 		   tapa.immovable=true;
 		   }
 

@@ -44,7 +44,7 @@ package {
 		[Embed(source = "Nivel3\\nivel3_gips.csv", mimeType="application/octet-stream")] public static var Gips:Class;
 
 				
-	
+	    private var boss:sentinel;	
 		private var player:Jugador;
 		private var lifebar: FlxSprite;
 		private var bar0_20: FlxSprite;
@@ -86,6 +86,12 @@ package {
 		private var plat4: FlxSprite;
 		private var plat5: FlxSprite;
 		private var plat6: FlxSprite;
+		private var platc:FlxSprite;
+		private var platj:FlxSprite;
+		private var platj1:FlxSprite;
+		
+		private var bosstime:Number=0;
+		private var bosshurt:Boolean=false;
 		
 		private var saw1: FlxSprite;
 		private var saw2: FlxSprite;
@@ -95,6 +101,7 @@ package {
 		private var entrada: FlxSprite;
 		private var salida: FlxSprite;
 		
+		private var swapc: Boolean=false;
 				
 
 		var timeRemaining:Number = 0; // in seconds
@@ -120,11 +127,12 @@ package {
         {
            	
 			
+		
 		   mapa_pared =  new FlxTilemap();
 		   mapa_pared.loadMap(new Pared(), paredTiles,45,32);
            add(mapa_pared);
 		   
-		   saw1=new FlxSprite(2300,297,sierra_img);
+		   saw1=new FlxSprite(2300,300,sierra_img);
 		   saw1.angularVelocity=80;
 		   saw1.immovable=true;
 		   add(saw1);
@@ -195,11 +203,11 @@ package {
 		   add(salida);
 			
 		   //RAYOS
-		   rayo1=new FlxSprite(170,292,rayo_img);
+		 /* rayo1=new FlxSprite(150,292,rayo_img);
 		   rayo1.immovable=true;
 		   add(rayo1);	
 		   
-		   rayo2=new FlxSprite(240,292,rayo_img);
+		   rayo2=new FlxSprite(270,250,rayo_img);
 		   rayo2.immovable=true;
 		   add(rayo2);	
 		   
@@ -213,7 +221,7 @@ package {
 		   
 		   rayo5=new FlxSprite(2615,292,rayo_img);
 		   rayo5.immovable=true;
-		   add(rayo5);
+		   add(rayo5);*/
 		   
 		   //PICOS
 		   picos1=new FlxSprite(340,297,picos_img);
@@ -277,6 +285,12 @@ package {
 		   plat2.immovable=true;
 		   add(plat2);
 		   
+		    platc=new FlxSprite(1800,320,plataforma_img);
+		   platc.immovable=true;
+		   add(platc);
+		   
+		   
+		   
 		   plat3=new FlxSprite(2970,320,plataforma_img);
 		   plat3.immovable=true;
 		   add(plat3);
@@ -292,10 +306,26 @@ package {
 		   plat6=new FlxSprite(3485,320,plataforma_img);
 		   plat6.immovable=true;
 		   add(plat6);
+		   
+		   platj=new FlxSprite(3970,260,plataforma_img);
+		   platj.immovable=true;
+		   add(platj);
+		   
+		   platj1=new FlxSprite(4290,260,plataforma_img);
+		   platj1.immovable=true;
+		   add(platj1);
+		   
 
-		   player = new Jugador(35,250);
+
+		   player = new Jugador(5,270);
 		   add(player);
-	
+		   boss= new sentinel();
+			boss.x=4100;
+			boss.y=140;
+			add(boss);
+			
+					   FlxG.playMusic(sound);
+			
 	
 		   //mundo de 100 x 17 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,4500,544);
@@ -346,7 +376,6 @@ package {
 		
 	       super.update();
 		   time();
-		   FlxG.play(sound,.2);
 		   
 				if(FlxG.keys.justPressed("P"))
 				paused = !paused;
@@ -359,6 +388,15 @@ package {
 				}
 		//SWAP1
 		  if(robot1.x<=755 && swap==false){
+			plat1.x-=2;
+			plat2.x+=2;
+			plat3.x--;
+			plat4.x--;
+			plat5.x--;
+			plat6.x--;
+			platj.y++;
+			platj1.y++;
+			
 			robot1.x--;
 			robot3.x--;
 			robot5.x--;
@@ -372,6 +410,14 @@ package {
 	   	  }
 	   
 	  	 if(robot1.x>=620 && swap==true){
+			plat1.x+=2;
+			plat2.x-=2;
+			plat3.x++;
+			plat4.x++;
+			plat5.x++;
+			plat6.x++;
+			platj.y--;
+			platj1.y--;
 			robot1.x++;
 			robot3.x++;
 			robot5.x++;
@@ -386,6 +432,7 @@ package {
 		 //SWAP2
 		 if(robot2.x<=1000 && swap2==false){
 			robot2.x--;
+			platc.x--;
 			robot4.x--;
 			robot6.x--;
 			robot2.play("left");
@@ -399,6 +446,7 @@ package {
 	   
 	  	 if(robot2.x>=800 && swap2==true){
 			robot2.x++;
+			platc.x++;
 			robot4.x++;
 			robot6.x++;
 			robot2.play("right");
@@ -408,6 +456,9 @@ package {
 			swap2=false;
 			}
 	  	 }
+		 
+		 //swap platc
+		
 	   
 		   //Movimientos Pupai
 		   if(FlxG.keys.pressed("RIGHT")){
@@ -424,6 +475,8 @@ package {
 		  
 		  if(FlxG.keys.pressed("DOWN")){
 				player.y+=3;
+			 //trace(player.x,player.y);
+				
 		   }
 		   
 		   //Pupai corra
@@ -436,14 +489,35 @@ package {
 				}		
 		   }
 		   
+		   //el boss
+		   if(boss.x>player.x){
+			boss.play("left");
+			
+		   }
+		   
+		   else{
+			boss.play("right");
+		   
+		   }
 		   
 		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground)){
 				player.acceleration.y = 850;
 		   }
 		   //colillides 
+		   
+		   FlxG.collide(boss,mapa_ground);
+		   FlxG.collide(platj,player);
+		   FlxG.collide(platj1,player);
+
+		   
+		   
+
 		   FlxG.collide(player,mapa_ground);
 		   FlxG.collide(player,plat1);
+		    FlxG.collide(player,platc);
+		   
+		   
 		   FlxG.collide(player,plat2);
 		   FlxG.collide(player,plat3);
 		   FlxG.collide(player,plat4);
@@ -458,17 +532,78 @@ package {
 		   FlxG.collide(robot4,mapa_ground);	
 		   FlxG.collide(robot5,mapa_ground);
 		   FlxG.collide(robot6,mapa_ground);	   
-	   
-		  
+		   
+		   //colides con daños
+		   
+		  if(FlxG.collide(player,picos1) || FlxG.collide(player,picos2) ||FlxG.collide(player,picos3) ||FlxG.collide(player,picos4) ||
+		   FlxG.collide(player,picos5) || FlxG.collide(player,rayo1)||FlxG.collide(player,rayo2)||FlxG.collide(player,rayo3)||
+		   FlxG.collide(player,rayo4)||FlxG.collide(player,rayo5) || FlxG.collide(player,saw1) || FlxG.collide(player,saw2) ||
+		   FlxG.collide(player,saw3) ||FlxG.collide(player,saw4) ){
+			
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			
+			player.x-=30;
+			
+			
+		   }
+		   
+		   //pelea con robots
+		   if(FlxG.overlap(robot1,player)){
+			player.pelea(robot1);
+			bajarVida();			
+		   }
+		   if(FlxG.overlap(robot2,player)){
+			player.pelea(robot2);
+			bajarVida();			
+		   }
+		  if(FlxG.overlap(robot3,player)){
+			player.pelea(robot3);
+			bajarVida();			
+		   }
+		   if(FlxG.overlap(robot4,player)){
+			player.pelea(robot4);
+			bajarVida();			
+		   }
+		   if(FlxG.overlap(robot5,player)){
+			player.pelea(robot5);
+			bajarVida();			
+		   }
+		  if(FlxG.overlap(robot6,player)){
+			player.pelea(robot6);
+			bajarVida();			
+		   }
+		   
+		    if(FlxG.overlap(boss,player)){
+			if(bosstime==0){
+			bosshurt=player.bossFight(boss);
+			bosstime++;
+			bajarVida();
+			}
+			
+		   }
+		   //trace("bosstime: "+bosstime);
+		   if (bosstime>0 && bosstime<100){
+				bosshurt=true;
+				bosstime++;
+			}
+			else {
+				bosstime=0;
+				bosshurt=false;
+			}
+		   
+		   
+		   
+		   
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
 				FlxG.switchState(new Nivel3());
 		   }
 		   
 		  }
+		 }
 		   
 		
 	   }
 			
-	}
-	
 	

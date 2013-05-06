@@ -303,6 +303,9 @@ package {
 		   player = new Jugador(2050,0);
 		   
 		   add(player);
+		   
+		   		   FlxG.playMusic(sound);
+		   
 	
 		   //mundo de 50 x 40 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2250,1280);
@@ -353,7 +356,6 @@ package {
 		
 	       super.update();
 		   		time();
-				FlxG.play(sound,.2);
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -594,7 +596,7 @@ package {
 				FlxG.switchState(new Nivel2());
 		   }
 		   if(FlxG.collide(player,entrada_gips)){
-				FlxG.switchState(new PreNivel3());
+				FlxG.switchState(new Nivel3());
 		   }
 		  }
 		   

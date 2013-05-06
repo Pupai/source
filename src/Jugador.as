@@ -48,8 +48,31 @@
 				}
 			}
 		}
+		
+		public function peleaj(a : FlxSprite):void {
+			if (this.y + 26 < a.y) {
+				trace(this.y, a.y);
+				a.hurt(20);
+				
+			} else {
+				this.hurt(20);
+				this.bandera = true;
 
-		public function bossFight(a : Jefe) : Boolean {
+				trace("en player " + this.bandera);
+				if (this.facing == FlxObject.RIGHT) {
+					trace("derecha");
+					this.x -= 20;
+					this.y -= 20;
+				}
+				if (this.facing == FlxObject.LEFT) {
+					trace("izquierda");
+					this.x += 20;
+					this.y -= 20;
+				}
+			}
+		}
+
+		public function bossFight(a : FlxSprite) : Boolean {
 			if (this.y + 20 < a.y) {
 				bosshurt = true;
 				trace(this.y, a.y);

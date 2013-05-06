@@ -7,6 +7,7 @@
 		 	
 		
 		[Embed(source = "Nivel 1\\boss1.png")] public static var bossLevel1:Class;
+		
 		var bullet:Globo;
 		var bullets:FlxGroup;
 		public function Jefe()
