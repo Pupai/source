@@ -2,37 +2,72 @@
 <project>
   <version>3.1.3</version>
   <bgColor>0x777777</bgColor>
-  <viewPos x="45" y="0"/>
+  <viewPos x="215" y="-3"/>
   <firstLayersTop>false</firstLayersTop>
   <spriteEntries currentId="1"/>
   <layers>
     <group name="Group1" id="0" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
-      <maplayer name="Map1" id="1" xScroll="1" yScroll="1" x="0" y="0" width="20" height="20" tileset="../../../Desktop/brick_tiles_1/brick_tiles_1.png" tileWidth="33" tileHeight="34" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="33" tileSpacingY="34" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" selected="true">
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,4,2,0,0</row>
-        <row>0,0,2,0,0,0,2,3,3,0,0,0,0,0,0,3,0,0,0,4</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,4,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0</row>
-        <row>4,1,1,1,1,1,3,3,1,1,4,4,4,4,4,4,4,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
-        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+      <maplayer name="ground" id="0" xScroll="1" yScroll="1" x="0" y="0" width="17" height="17" tileset="../../../../Dropbox/Videojuegos/Map/ground-tile.png" tileWidth="45" tileHeight="32" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="45" tileSpacingY="32" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,3,1,1,1,7,0,0</row>
+        <row>1,1,1,1,1,1,1,2,0,0,5,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,6,1,1,7,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+      </maplayer>
+      <maplayer name="top" id="1" xScroll="1" yScroll="1" x="0" y="0" width="17" height="17" tileset="../../../../Dropbox/Videojuegos/Map/top-tile.png" tileWidth="45" tileHeight="32" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="45" tileSpacingY="32" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,0,0</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3</row>
+        <row>4,4,4,4,4,4,4,4,4,4,4,1,4,1,0,3,3</row>
+        <row>4,1,4,1,1,1,4,4,4,4,0,0,0,0,0,3,3</row>
+        <row>0,0,0,0,0,0,0,0,1,4,0,3,3,3,3,3,3</row>
+        <row>3,3,3,3,3,3,3,0,0,0,0,3,3,3,3,3,3</row>
+        <row>3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3</row>
+      </maplayer>
+      <maplayer name="escalera" id="2" xScroll="1" yScroll="1" x="0" y="0" width="17" height="17" tileset="../../../../Dropbox/Videojuegos/Map/escalera.png" tileWidth="45" tileHeight="32" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="45" tileSpacingY="32" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" selected="true">
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
       </maplayer>
     </group>
   </layers>
   <layerTemplates/>
-  <tileMatrix currentMatrix="0" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="">
+  <tileMatrix currentMatrix="0" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="../../../../Dropbox/Videojuegos/Map/tutorial">
     <row>
       <tile>0</tile>
       <tile>0</tile>
@@ -113,7 +148,7 @@
       </rows>
     </specialConnections>
   </tileMatrix>
-  <tileMatrixData name="matrix1" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="">
+  <tileMatrixData name="matrix1" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="../../../../Dropbox/Videojuegos/Map/tutorial">
     <tiles>0,0,0,0,0,0,0,0,0</tiles>
     <connections set="0">
       <tiles>0,0,0,0</tiles>
@@ -167,7 +202,10 @@
     <SaveGuidesSeparately>false</SaveGuidesSeparately>
     <ForceTilemapPositionChangesInUnits>false</ForceTilemapPositionChangesInUnits>
   </options>
-  <exporter name="none" spritepos="Top Left" rotatedSpritePos="false" relativePaths="false" useProjectExporterOnly="false"/>
+  <exporter name="C:\Program Files (x86)\DAME\lua\Exporters\csvTilemap.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="false" useProjectExporterOnly="false">
+    <setting name="FileExt">csv</setting>
+    <setting name="CSVDir">C:\Users\André\Desktop</setting>
+  </exporter>
   <customPropertyTypes/>
   <guides>
     <snap>false</snap>

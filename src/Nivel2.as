@@ -24,7 +24,7 @@ package {
 	
 	
 	public class Nivel2 extends FlxState{
-		[Embed(source = 'nivel2.mp3')] private var sound:Class;
+		[Embed(source = 'Nivel2\\nivel2.mp3')] private var sound:Class;
 		[Embed(source = "Nivel2\\sewer_ground.png")] public static var groundTiles:Class;
 		[Embed(source = "Nivel2\\top_sewer.png")] public static var topTiles:Class;
 		[Embed(source = "Nivel2\\puente.png")] public static var puente_image:Class;
@@ -296,16 +296,13 @@ package {
 		   piso.makeGraphic(2250, 2);
 		   add(piso);
 		 
-<<<<<<< HEAD
-		   player = new Jugador(500,0);
-		   player.x=2050;
-		   player.y=0;
-=======
+		   //player = new Jugador(500,0);
+		  // player.x=2050;
+		  // player.y=0;
+
 		   player = new Jugador(2050,0);
 		   
->>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
 		   add(player);
-		   trace(player.bandera);
 	
 		   //mundo de 50 x 40 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2250,1280);

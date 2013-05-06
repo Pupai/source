@@ -50,7 +50,7 @@ package {
 		var counter : int=0;
 		
 		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		var timeRemainingDisplay:FlxText = new FlxText(5, 5, 50);
 		
 		
 		
@@ -117,7 +117,7 @@ package {
 		   perro2= new Perro();
 		   perro2.x=650;
 		   perro2.y=370;
-		   add(perro2)
+		   add(perro2);
 		   texto=new FlxText(50, 260, FlxG.width, "Muevete con las flechas del teclado, salta con espacio y acelera con A," +"\n"+ "tu primera prueba sera esquivar a los enemigos y llegar al final" ).setFormat(null, 9, 0xFFF3030, "center");
          
            add(texto);
@@ -264,7 +264,7 @@ package {
 		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
          add(texto);
 		 
-		 FlxG.switchState(new Nivel1());
+		 FlxG.switchState(new PreNivel1());
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){

@@ -30,7 +30,7 @@
 			
  
     
- 			texto=new FlxText(0, 300, FlxG.width, "Unum Pupai").setFormat(null, 21, 0xFFF3030, "center");
+ 			texto=new FlxText(0, 100, FlxG.width, "Unum Pupai").setFormat(null, 28, 0xFFF3030, "center");
          
            add(texto);
 		   
@@ -39,11 +39,9 @@
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
-<<<<<<< HEAD
-			FlxG.switchState(new Nivel1());
-=======
-			FlxG.switchState(new Tutorial());
->>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
+
+			FlxG.switchState(new Nivel3());
+
 			
 		}
 

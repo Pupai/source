@@ -24,7 +24,7 @@ package {
 	
 	
 	public class Nivel1 extends FlxState{
-		[Embed(source = 'nivel1.mp3')] private var sound:Class;
+		[Embed(source = 'Nivel 1\\nivel1.mp3')] private var sound:Class;
 		[Embed(source = "Nivel 1\\edificio_rojo.png")] public static var edificioTiles:Class;
 		[Embed(source = "Nivel 1\\escritorio.png")] public static var escritorioTiles:Class;
 		[Embed(source = "Nivel 1\\fondo_edificio.png")] public static var fondo_edificioTiles:Class;
@@ -77,11 +77,7 @@ package {
 		private var escalera_sw:FlxTileblock;
 	
 		private var crate:Item;
-		private var crate2:Item;
-
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
-		
+		private var crate2:Item;		
 		
 		private var  mapa_edificio:FlxTilemap;
 		private var  mapa_top_ground:FlxTilemap;
@@ -217,7 +213,7 @@ package {
 		   
 		   //x, y, width, height
 		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
-		   escalera_ed.alpha=0
+		   escalera_ed.alpha=0;
 		   //width height
 		   escalera_ed.makeGraphic(44, 285);
 		   add(escalera_ed);
@@ -290,7 +286,7 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(0,770);
+		   player = new Jugador(0,700);
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
@@ -361,12 +357,8 @@ package {
 				player.bandera=false;
 			}
 		}
-<<<<<<< HEAD
-		public function tiempo():void{
-=======
-		
+
 		public function time():void{
->>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
 		 timeRemaining += FlxG.elapsed;
     	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
 		 timeRemainingDisplay.scrollFactor.x=0;
@@ -379,9 +371,7 @@ package {
 		override public function update():void{
 		
 	       super.update();
-<<<<<<< HEAD
-		   tiempo();   
-=======
+
 		   trace(player.y);
 		   
 		   time();
@@ -389,14 +379,14 @@ package {
 		   
 		   if( player.y>930){
 			
-			FlxG.switchState(new Nivel2());
+			FlxG.switchState(new PreNivel2());
 			
 		   }
 		   
 		   if(boss.health==0){
 		   tapa.immovable=true;
 		   }
->>>>>>> d2a16bffccd56514430a88bfdbd7544f2a0790c9
+
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -612,7 +602,7 @@ package {
 			add(boss);
 		   }
 		   if(boss.health==0){
-			FlxG.switchState(new HighScore());
+			//FlxG.switchState(new HighScore());
 		   }
 		  if(FlxG.overlap(bullet,player)){
 					player.pelea(bullet);
