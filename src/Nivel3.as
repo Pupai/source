@@ -224,23 +224,23 @@ package {
 		   add(rayo5);*/
 		   
 		   //PICOS
-		   picos1=new FlxSprite(340,297,picos_img);
+		   picos1=new FlxSprite(340,299,picos_img);
 		   picos1.immovable=true;
 		   add(picos1);	
 		   
-		   picos2=new FlxSprite(515,297,picos_img);
+		   picos2=new FlxSprite(515,299,picos_img);
 		   picos2.immovable=true;
 		   add(picos2);	
 		   
-		   picos3=new FlxSprite(750,297,picos_img);
+		   picos3=new FlxSprite(750,299,picos_img);
 		   picos3.immovable=true;
 		   add(picos3);
 		   
-		   picos4=new FlxSprite(1985,297,picos_img);
+		   picos4=new FlxSprite(1985,299,picos_img);
 		   picos4.immovable=true;
 		   add(picos4);
 		   
-		   picos5=new FlxSprite(3244,297,picos_img);
+		   picos5=new FlxSprite(3244,299,picos_img);
 		   picos5.immovable=true;
 		   add(picos5);
 		   
@@ -317,14 +317,14 @@ package {
 		   
 
 
-		   player = new Jugador(5,270);
+		   player = new Jugador(35,270);
 		   add(player);
 		   boss= new sentinel();
 			boss.x=4100;
 			boss.y=140;
 			add(boss);
 			
-					   FlxG.playMusic(sound);
+			FlxG.playMusic(sound);
 			
 	
 		   //mundo de 100 x 17 y Tiles de 45 x 32
@@ -533,8 +533,8 @@ package {
 		   FlxG.collide(robot5,mapa_ground);
 		   FlxG.collide(robot6,mapa_ground);	   
 		   
-		   //colides con daños
-		   
+		   //collides con daños
+		  		   
 		  if(FlxG.collide(player,picos1) || FlxG.collide(player,picos2) ||FlxG.collide(player,picos3) ||FlxG.collide(player,picos4) ||
 		   FlxG.collide(player,picos5) || FlxG.collide(player,rayo1)||FlxG.collide(player,rayo2)||FlxG.collide(player,rayo3)||
 		   FlxG.collide(player,rayo4)||FlxG.collide(player,rayo5) || FlxG.collide(player,saw1) || FlxG.collide(player,saw2) ||

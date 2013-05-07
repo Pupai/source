@@ -2,7 +2,7 @@ package {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	public class sentinel extends FlxSprite {
-				[Embed(source = "sentinel.png")] public static var bossLevel2:Class;
+				[Embed(source = "Nivel3\\sentinel.png")] public static var bossLevel2:Class;
 		
 		public function sentinel(){
 			health=100;
