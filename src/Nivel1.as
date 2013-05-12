@@ -106,20 +106,20 @@ package {
 		
 		
 		var _jump:Number = 0;
-		var swap:Boolean=false;
-		var swap2:Boolean=false;
+		private var swap:Boolean=false;
+		private var swap2:Boolean=false;
 		
-		var paused:Boolean=true;
-		var bullet:Globo;
-		var globiza:FlxGroup;
-		var bool:Boolean=false;
-		var dir:Boolean=false;
-		var bossmove:Number=0;
-		var bosshurt:Boolean=false;
-		var addboss:Boolean=false;
-		var bosstime:Number=0;
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		private var paused:Boolean=true;
+		private var bullet:Globo;
+		private var globiza:FlxGroup;
+		private var bool:Boolean=false;
+		private var dir:Boolean=false;
+		private var bossmove:Number=0;
+		private var bosshurt:Boolean=false;
+		private var addboss:Boolean=false;
+		private var bosstime:Number=0;
+		private var timeRemaining:Number = 0; // in seconds
+		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
 		
 		
 		 public function Nivel1()
@@ -380,7 +380,7 @@ package {
 		   
 		   if( player.y>930){
 			
-			FlxG.switchState(new Nivel2());
+			FlxG.switchState(new PreNivel2());
 			
 		   }
 		   

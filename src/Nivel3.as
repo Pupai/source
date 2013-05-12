@@ -36,6 +36,11 @@ package {
 		[Embed(source = "Nivel3\\plataforma.png")] public static var plataforma_img:Class;
 		[Embed(source = "Nivel3\\rayo.png")] public static var rayo_img:Class;
 		[Embed(source = "Nivel3\\sierra.png")] public static var sierra_img:Class;
+		[Embed(source = "Nivel3\\pizarron2.png")] public static var pizarron_img:Class;
+		[Embed(source = "Nivel3\\pizarra.png")] public static var pizarra_img:Class;
+		[Embed(source = "Nivel3\\librero.png")] public static var librero_img:Class;
+		[Embed(source = "Nivel3\\pantalla.png")] public static var pantalla_img:Class;
+		[Embed(source = "Nivel3\\barril.png")] public static var barril_img:Class;
 		[Embed(source = "lifebar.png")] public static var barra_image:Class;
 		[Embed(source = "vida.png")] public static var vida_image:Class;
 		
@@ -100,22 +105,26 @@ package {
 		
 		private var entrada: FlxSprite;
 		private var salida: FlxSprite;
+		private var pizarrond: FlxSprite;
+		private var pizarra: FlxSprite;
+		private var pantalla: FlxSprite;
+		private var lib: FlxSprite;
+		private var barril: FlxSprite;
 		
 		private var swapc: Boolean=false;
 				
 
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		private var timeRemaining:Number = 0; // in seconds
+		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
 		
 
-		var counter : int=0;
-		
-		var swap:Boolean=false;
-		var swap2:Boolean=false;
-		
-		var paused:Boolean=true;
+		private var counter : int=0;
+		private var swap:Boolean=false;
+		private var swap2:Boolean=false;
+		private var paused:Boolean=true;
+		private var pared1:FlxTileblock;
+		private var pared2:FlxTileblock;
 
-		var c:Number=0;
 		
 		 public function Nivel3()
         {
@@ -131,6 +140,22 @@ package {
 		   mapa_pared =  new FlxTilemap();
 		   mapa_pared.loadMap(new Pared(), paredTiles,45,32);
            add(mapa_pared);
+		   
+		   pizarra=new FlxSprite(402,230,pizarra_img);
+		   pizarra.immovable=true;
+		   add(pizarra);
+		   
+		   lib=new FlxSprite(830,255,librero_img);
+		   lib.immovable=true;
+		   add(lib);
+		   
+		   pantalla=new FlxSprite(2100,255,pantalla_img);
+		   pantalla.immovable=true;
+		   add(pantalla);
+		   
+		   pizarrond=new FlxSprite(2410,250,pizarron_img);
+		   pizarrond.immovable=true;
+		   add(pizarrond);
 		   
 		   saw1=new FlxSprite(2300,300,sierra_img);
 		   saw1.angularVelocity=80;
@@ -315,9 +340,18 @@ package {
 		   platj1.immovable=true;
 		   add(platj1);
 		   
+		   pared1 = new FlxTileblock(0, 200, 2, 150);
+		   pared1.alpha=0;
+		   pared1.makeGraphic(2, 150);
+		   add(pared1);
+		   
+		   pared2 = new FlxTileblock(4497, 200, 2, 150);
+		   pared2.alpha=0;
+		   pared2.makeGraphic(2, 150);
+		   add(pared2);
 
 
-		   player = new Jugador(35,270);
+		   player = new Jugador(4100,270);
 		   add(player);
 		   boss= new sentinel();
 			boss.x=4100;
@@ -523,9 +557,9 @@ package {
 		   FlxG.collide(player,plat4);
 		   FlxG.collide(player,plat5);
 		   FlxG.collide(player,plat6);
-		   FlxG.collide(player,saw1);
-		   FlxG.collide(player,saw2);
-		   
+		   FlxG.collide(player,pared1);
+		   FlxG.collide(player,pared2);
+		  		   
 		   FlxG.collide(robot1,mapa_ground);
 		   FlxG.collide(robot2,mapa_ground);
 		   FlxG.collide(robot3,mapa_ground);

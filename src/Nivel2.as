@@ -65,6 +65,7 @@ package {
 		private var  mapa_top_ground:FlxTilemap;
 		
 		private var piso:FlxTileblock;
+		private var face:FlxTileblock;
 		
 		private var pico1: FlxSprite;
 		private var pico2: FlxSprite;
@@ -72,11 +73,20 @@ package {
 		private var pico4: FlxSprite;
 		private var pico5: FlxSprite;
 		private var pico6: FlxSprite;
+		private var pico7: FlxSprite;
+		private var pico8: FlxSprite;
+		private var pico9: FlxSprite;
 		
 		private var pipe_s1: FlxSprite;
 		private var agua_s1: FlxSprite;
+		private var pipe_s2: FlxSprite;
+		private var agua_s2: FlxSprite;
+		private var pipe_s3: FlxSprite;
+		private var agua_s3: FlxSprite;
 		private var pipe_d1: FlxSprite;
 		private var agua_d1: FlxSprite;
+		private var pipe_d2: FlxSprite;
+		private var agua_d2: FlxSprite;
 		
 		private var plat1: FlxSprite;
 		private var plat2: FlxSprite;
@@ -97,18 +107,18 @@ package {
 		private var entrada: FlxSprite;
 		private var entrada_gips:FlxTileblock;
 		
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		private var timeRemaining:Number = 0; // in seconds
+		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
 		
 
-		var counter : int=0;
+		private var counter : int=0;
 		
-		var swap:Boolean=false;
-		var swap2:Boolean=false;
+		private var swap:Boolean=false;
+		private var swap2:Boolean=false;
 		
-		var paused:Boolean=true;
+		private var paused:Boolean=true;
 
-		var c:Number=0;
+		private var c:Number=0;
 		
 		 public function Nivel2()
         {
@@ -153,6 +163,18 @@ package {
 		   pico6.immovable=true;
 		   add(pico6);
 		   
+		   pico7=new FlxSprite(650,350,pico_image);
+		   pico7.immovable=true;
+		   add(pico7);
+		   
+		   pico8=new FlxSprite(600,350,pico_image);
+		   pico8.immovable=true;
+		   add(pico8);
+		   
+		   pico9=new FlxSprite(550,350,pico_image);
+		   pico9.immovable=true;
+		   add(pico9);
+		   
 		   //PIPES
 		   pipe_s1=new FlxSprite(900,476,pipe_s_image);
 		   pipe_s1.immovable=true;
@@ -161,12 +183,33 @@ package {
 		   agua_s1.immovable=true;
 		   add(agua_s1);
 		   
+		   pipe_s2=new FlxSprite(450,476,pipe_s_image);
+		   pipe_s2.immovable=true;
+		   add(pipe_s2);
+		   agua_s2=new FlxSprite(451,488,agua_s_image);
+		   agua_s2.immovable=true;
+		   add(agua_s2);
+		   
+		   pipe_s3=new FlxSprite(350,476,pipe_s_image);
+		   pipe_s3.immovable=true;
+		   add(pipe_s3);
+		   agua_s3=new FlxSprite(351,488,agua_s_image);
+		   agua_s3.immovable=true;
+		   add(agua_s3);
+		   
 		   pipe_d1=new FlxSprite(800,476,pipe_d_image);
 		   pipe_d1.immovable=true;
 		   add(pipe_d1);
 		   agua_d1=new FlxSprite(801,488,agua_d_image);
 		   agua_d1.immovable=true;
 		   add(agua_d1);
+		   
+		   pipe_d2=new FlxSprite(1040,1020,pipe_d_image);
+		   pipe_d2.immovable=true;
+		   add(pipe_d2);
+		   agua_d2=new FlxSprite(1041,1032,agua_d_image);
+		   agua_d2.immovable=true;
+		   add(agua_d2);
 		  
 		   //PLATAFORMA
 		   plat1=new FlxSprite(360,1057,plataforma_image);
@@ -240,12 +283,12 @@ package {
 		   add(perro);
 		   
 		   perro1= new Perro();
-		   perro1.x=2032;
+		   perro1.x=2010;
 		   perro1.y=1014;
 		   add(perro1);
 		   
 		   perro2= new Perro();
-		   perro2.x=1732;
+		   perro2.x=1070;
 		   perro2.y=1014;
 		   add(perro2);
 		   
@@ -255,13 +298,16 @@ package {
 		   add(perro3);
 		   
 		   perro4= new Perro();
-		   perro4.x=1932;
-		   perro4.y=1014;
+		   perro4.x=1000;
+		   perro4.y=400;
 		   add(perro4);
 		   
+		   perro5= new Perro();
+		   perro5.x=1250;
+		   perro5.y=400;
+		   add(perro5);
 		   
-		   
-		   
+	   
 		   lifebar=new FlxSprite(5,5,barra_image);
 		   lifebar.scrollFactor.x=0;
 		   lifebar.scrollFactor.y=0;
@@ -295,18 +341,21 @@ package {
 		   //width height
 		   piso.makeGraphic(2250, 2);
 		   add(piso);
+		   
+		   face = new FlxTileblock(2000, 50, 150, 2);
+		   face.alpha=0;
+		   face.makeGraphic(200, 2);
+		   add(face);
 		 
 		   //player = new Jugador(500,0);
 		  // player.x=2050;
 		  // player.y=0;
 
-		   player = new Jugador(2050,0);
-		   
+		   player = new Jugador(2050,0);  
 		   add(player);
 		   
-		   		   FlxG.playMusic(sound);
-		   
-	
+		   FlxG.playMusic(sound);
+		  
 		   //mundo de 50 x 40 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2250,1280);
 		   FlxG.camera.follow(player);
@@ -369,32 +418,49 @@ package {
 		   if(perro.x<=1732 && swap==true){
 				perro.x--;
 				perro1.x--;
-				perro2.x--;
-				perro3.x--;
 				perro4.x--;
 				perro.play("left");
 				perro1.play("left");
-				perro2.play("left");
-				perro3.play("left");
 				perro4.play("left");
 				if(perro.x==1632){
 					swap=false;
 				}
 		   }
-		   //mover perro hoyo
+		   
 		   if(perro.x>=1632 && swap==false){
 				perro.x++;
 				perro1.x++;
-				perro2.x++;
-				perro3.x++;
 				perro4.x++;
 				perro.play("right");
 				perro1.play("right");
-				perro2.play("right");
-				perro3.play("right");
 				perro4.play("right");
 				if(perro.x==1732){
 					swap=true;
+				}
+		   }
+		   
+		   //SWAP2
+		   if(perro5.x<=1300 && swap2==true){
+				perro5.x--;
+				perro5.play("left");
+				perro2.x--;
+				perro2.play("left");
+				perro3.x--;
+				perro3.play("left");
+				if(perro5.x==1150){
+					swap2=false;
+				}
+		   }
+		   
+		   if(perro5.x>=1150 && swap2==false){
+				perro5.x++;
+				perro5.play("right");
+				perro2.x++;
+				perro2.play("right");
+				perro3.x++;
+				perro3.play("right");
+				if(perro5.x==1300){
+					swap2=true;
 				}
 		   }
 		   
@@ -451,8 +517,22 @@ package {
 			pico6.immovable==false;
 			pico6.y+=5;
 		   }
+		   if(player.x<pico7.x){
+			pico7.immovable==false;
+			pico7.y+=5;
+		   }
+		   if(player.x<pico8.x){
+			pico8.immovable==false;
+			pico8.y+=5;
+		   }
+		   if(player.x<pico9.x){
+			pico9.immovable==false;
+			pico9.y+=5;
+		   }
 		   
-		   
+		   if(FlxG.overlap(player,face)){
+				player.play("left");
+		   }
 		   
 		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground)){
@@ -465,25 +545,26 @@ package {
 		   FlxG.collide(perro2,mapa_ground);
 		   FlxG.collide(perro3,mapa_ground);
 		   FlxG.collide(perro4,mapa_ground);
+		   FlxG.collide(perro5,mapa_ground);
 		   
-		   if(FlxG.overlap(player,agua_s1)){
+		   if(FlxG.overlap(player,agua_s1) || FlxG.overlap(player,agua_s2) || FlxG.overlap(player,agua_s3)){
 			player.bandera=true;
 			player.hurt(20);
 			bajarVida();
 			player.x+=20;
-			
 		   }
-		   if(FlxG.overlap(player,agua_d1)){
+		   if(FlxG.overlap(player,agua_d1) || FlxG.overlap(player,agua_d2)){
 			player.bandera=true;
 			player.hurt(20);
 			bajarVida();
 			player.x+=20;
-			
 		   }
 		   
 		   FlxG.collide(player,pipe_d1);
+		   FlxG.collide(player,pipe_d2);
 		   FlxG.collide(player,pipe_s1);
-		   
+		   FlxG.collide(player,pipe_s2);
+		   FlxG.collide(player,pipe_s3);
 		   
 		   FlxG.collide(player,plat1);
 		   FlxG.collide(player,plat2);
@@ -520,24 +601,37 @@ package {
 			player.bandera=true;
 			player.hurt(20);
 			bajarVida();
-			pico4.kill();
-			 
-		   }
-		   
+			pico4.kill();			 
+		   }	   
 		    if(FlxG.overlap(pico5,player)){
 			player.bandera=true;
 			player.hurt(20);
 			bajarVida();
-			pico5.kill();
-			 
-		   }
-		   
+			pico5.kill(); 
+		   } 
 		    if(FlxG.overlap(pico6,player)){
 			player.bandera=true;
 			player.hurt(20);
 			bajarVida();
-			pico6.kill();
-			 
+			pico6.kill();	 
+		   }		   
+		   if(FlxG.overlap(pico7,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico7.kill();	 
+		   }
+		   if(FlxG.overlap(pico8,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico8.kill();	 
+		   }
+		   if(FlxG.overlap(pico9,player)){
+			player.bandera=true;
+			player.hurt(20);
+			bajarVida();
+			pico9.kill();	 
 		   }
 		   //collide del puente
 		   if(FlxG.collide(player,puente1)){
@@ -584,19 +678,21 @@ package {
 			bajarVida();
 		   }
 		   if(FlxG.overlap(perro1,player)){
+			player.pelea(perro1);
+			bajarVida();
+		   }
+		   if(FlxG.overlap(perro5,player)){
+			player.pelea(perro5);
 			bajarVida();
 		   }
 		   
-		  
-		   
-		  
-		   
+	   
 		  
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
 				FlxG.switchState(new Nivel2());
 		   }
 		   if(FlxG.collide(player,entrada_gips)){
-				FlxG.switchState(new Nivel3());
+				FlxG.switchState(new PreNivel3());
 		   }
 		  }
 		   
