@@ -40,7 +40,7 @@
 		}
 		public function Iniciar():void{
 
-			FlxG.switchState(new Nivel3());
+			FlxG.switchState(new Nivel1());
 
 			
 		}

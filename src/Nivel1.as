@@ -67,6 +67,7 @@ package {
 		private var paredcrate2:FlxTileblock;
 		private var paredcrate:FlxTileblock;
 		private var pared_ed:FlxTileblock;
+		private var p_texto:FlxTileblock;
 		
 		private var escalera_ed:FlxTileblock;
 		private var escalera_ed1E:FlxTileblock;
@@ -108,6 +109,10 @@ package {
 		var _jump:Number = 0;
 		private var swap:Boolean=false;
 		private var swap2:Boolean=false;
+		
+		private var b_texto:Boolean=false;
+		private var pasada:Number=0;
+		private var texto:FlxText;
 		
 		private var paused:Boolean=true;
 		private var bullet:Globo;
@@ -211,6 +216,11 @@ package {
 		   pared_ed.makeGraphic(2, 200);
 		   add(pared_ed);
 		   
+		   p_texto = new FlxTileblock(1850, 730, 2, 120);
+		   p_texto.alpha=100;
+		   p_texto.makeGraphic(2, 120);
+		   add(p_texto);
+		   
 		   //x, y, width, height
 		   escalera_ed = new FlxTileblock(1440, 226, 44, 285);
 		   escalera_ed.alpha=0;
@@ -250,7 +260,7 @@ package {
 		   
 		   //cuando el boss se muera mover tapa para que Pupai baje por escaleras
 		   tapa=new FlxSprite(1666,832,tapa_image);
-		   tapa.immovable=false;
+		   tapa.immovable=true;
 		 
 		   add(tapa);
 		   
@@ -286,11 +296,10 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(0,700);
+		   player = new Jugador(1600,600);
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);
-		   trace(player.bandera);
 		   
 		   boss = new Jefe();
 		   
@@ -330,7 +339,9 @@ package {
 		   }
 		   add(globiza);
 		    FlxG.playMusic(sound);
-		   
+			texto=new FlxText(1400, 640, FlxG.width, "¡Activa el botón pegándote a él y apretando S!"+"\n"+"Regresa al inicio para derrotar al boss"+"\n"+"y poder desbloquear la escalera" ).setFormat(null, 12, 0xFFF3030, "center");
+		   add(texto);
+		   texto.visible=false;
 		   //mundo de 45 x 30 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,2025,960);
 		   FlxG.camera.follow(player);
@@ -374,7 +385,6 @@ package {
 		
 	       super.update();
 
-		   trace(player.y);
 		   
 		   time();
 		   
@@ -384,9 +394,7 @@ package {
 			
 		   }
 		   
-		   if(boss.health==0 && addboss==true){
-		   tapa.immovable=true;
-		   }
+		   
 
 			   if(FlxG.keys.justPressed("P"))
 				paused = !paused;
@@ -545,6 +553,8 @@ package {
 				}
 		   }
 	
+
+	
 		  //-20 de vida cuando choque con perro
 		  
 		   if(FlxG.overlap(perro2,player)){
@@ -573,7 +583,6 @@ package {
 			bajarVida();
 		   }
 		   if(FlxG.overlap(boss,player) && !FlxG.collide(player,casa)){
-			trace("bosstime: "+bosstime);
 			if(bosstime==0){
 			bosshurt=player.bossFight(boss);
 			bosstime++;
@@ -581,7 +590,6 @@ package {
 			}
 			
 		   }
-		   trace("bosstime: "+bosstime);
 		   if (bosstime>0 && bosstime<100){
 				bosshurt=true;
 				bosstime++;
@@ -591,13 +599,17 @@ package {
 				bosshurt=false;
 			}
 		  
-		  trace("boss health: "+boss.health);
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new Nivel1());
 		   }
+		   if(FlxG.overlap(p_texto,player)){
+				texto.visible=true;		
+		   }
+		   
 		    if(FlxG.collide (player, boton) && FlxG.keys.pressed("S")){
-				addboss=true;
-				trace("activar boss");				
+				addboss=true;		
+				p_texto.y=20000;
+				texto.visible=false;
 		   }
 		   if(addboss){
 			add(boss);
@@ -614,7 +626,6 @@ package {
 		if(bossmove<120){
 			bossmove++;
 			if(bossmove>=50 && bossmove<=55){
-				trace("pew");
 			   	bool=true;
 				boss.shoot(bool,"attackright");
 				bullet= Globo(globiza.getFirstAvailable());
@@ -640,7 +651,6 @@ package {
 	   else if(bossmove<220){
 		
 		if(boss.x>0){
-			trace("no collidea. hurt: "+bosshurt);
 			bossmove++;
 			if(bosshurt){
 				boss.play("hurtleft");
@@ -652,7 +662,6 @@ package {
 			}
 		}
 		else {
-			trace("collidea. hurt: "+bosshurt);
 			bossmove=0;
 		}
 		

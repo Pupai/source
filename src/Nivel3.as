@@ -49,7 +49,7 @@ package {
 		[Embed(source = "Nivel3\\nivel3_gips.csv", mimeType="application/octet-stream")] public static var Gips:Class;
 
 				
-	    private var boss:sentinel;	
+	  
 		private var player:Jugador;
 		private var lifebar: FlxSprite;
 		private var bar0_20: FlxSprite;
@@ -83,7 +83,6 @@ package {
 		private var robot3:Robot;
 		private var robot4:Robot;
 		private var robot5:Robot;
-		private var robot6:Robot;
 		
 		private var plat1: FlxSprite;
 		private var plat2: FlxSprite;
@@ -94,9 +93,6 @@ package {
 		private var platc:FlxSprite;
 		private var platj:FlxSprite;
 		private var platj1:FlxSprite;
-		
-		private var bosstime:Number=0;
-		private var bosshurt:Boolean=false;
 		
 		private var saw1: FlxSprite;
 		private var saw2: FlxSprite;
@@ -124,6 +120,7 @@ package {
 		private var paused:Boolean=true;
 		private var pared1:FlxTileblock;
 		private var pared2:FlxTileblock;
+		private var fin:FlxTileblock;
 
 		
 		 public function Nivel3()
@@ -223,7 +220,7 @@ package {
 		   entrada.immovable=true;
 		   add(entrada);
 		   
-		   salida=new FlxSprite(4375,188,salida_img);
+		   salida=new FlxSprite(4390,43,salida_img);
 		   salida.immovable=true;
 		   add(salida);
 			
@@ -296,11 +293,6 @@ package {
 		   robot5.y=280;
 		   add(robot5);
 		   
-		   robot6= new Robot();
-		   robot6.x=4150;
-		   robot6.y=280;
-		   add(robot6);
-		   
 		   //PLATAFORMAS MOVEDIZAS
 		   plat1=new FlxSprite(1350,320,plataforma_img);
 		   plat1.immovable=true;
@@ -332,11 +324,11 @@ package {
 		   plat6.immovable=true;
 		   add(plat6);
 		   
-		   platj=new FlxSprite(3970,260,plataforma_img);
+		   platj=new FlxSprite(4120,332,plataforma_img);
 		   platj.immovable=true;
 		   add(platj);
 		   
-		   platj1=new FlxSprite(4290,260,plataforma_img);
+		   platj1=new FlxSprite(4225,260,plataforma_img);
 		   platj1.immovable=true;
 		   add(platj1);
 		   
@@ -345,18 +337,19 @@ package {
 		   pared1.makeGraphic(2, 150);
 		   add(pared1);
 		   
-		   pared2 = new FlxTileblock(4497, 200, 2, 150);
+		   pared2 = new FlxTileblock(4497, 0, 2, 450);
 		   pared2.alpha=0;
-		   pared2.makeGraphic(2, 150);
+		   pared2.makeGraphic(2, 450);
 		   add(pared2);
+		   
+		   fin = new FlxTileblock(4450, 30, 2, 200);
+		   fin.alpha=0;
+		   fin.makeGraphic(2, 200);
+		   add(fin);
 
 
-		   player = new Jugador(4100,270);
+		   player = new Jugador(35,270);
 		   add(player);
-		   boss= new sentinel();
-			boss.x=4100;
-			boss.y=140;
-			add(boss);
 			
 			FlxG.playMusic(sound);
 			
@@ -428,9 +421,7 @@ package {
 			plat4.x--;
 			plat5.x--;
 			plat6.x--;
-			platj.y++;
-			platj1.y++;
-			
+			platj.y++;			
 			robot1.x--;
 			robot3.x--;
 			robot5.x--;
@@ -451,7 +442,6 @@ package {
 			plat5.x++;
 			plat6.x++;
 			platj.y--;
-			platj1.y--;
 			robot1.x++;
 			robot3.x++;
 			robot5.x++;
@@ -468,11 +458,9 @@ package {
 			robot2.x--;
 			platc.x--;
 			robot4.x--;
-			robot6.x--;
+			platj1.y--;
 			robot2.play("left");
 			robot4.play("left");
-			robot6.play("left");
-			
 			if(robot2.x==800){
 				swap2=true;
 			}
@@ -482,10 +470,9 @@ package {
 			robot2.x++;
 			platc.x++;
 			robot4.x++;
-			robot6.x++;
+			platj1.y++;
 			robot2.play("right");
-			robot4.play("right");	
-			robot6.play("right");	
+			robot4.play("right");		
 			if(robot2.x==1000){
 			swap2=false;
 			}
@@ -523,29 +510,14 @@ package {
 				}		
 		   }
 		   
-		   //el boss
-		   if(boss.x>player.x){
-			boss.play("left");
-			
-		   }
-		   
-		   else{
-			boss.play("right");
-		   
-		   }
-		   
 		   //Gravedad 
 		   if(!FlxG.collide(player,mapa_ground)){
 				player.acceleration.y = 850;
 		   }
 		   //colillides 
 		   
-		   FlxG.collide(boss,mapa_ground);
 		   FlxG.collide(platj,player);
 		   FlxG.collide(platj1,player);
-
-		   
-		   
 
 		   FlxG.collide(player,mapa_ground);
 		   FlxG.collide(player,plat1);
@@ -564,8 +536,7 @@ package {
 		   FlxG.collide(robot2,mapa_ground);
 		   FlxG.collide(robot3,mapa_ground);
 		   FlxG.collide(robot4,mapa_ground);	
-		   FlxG.collide(robot5,mapa_ground);
-		   FlxG.collide(robot6,mapa_ground);	   
+		   FlxG.collide(robot5,mapa_ground);   
 		   
 		   //collides con daños
 		  		   
@@ -603,35 +574,13 @@ package {
 		   if(FlxG.overlap(robot5,player)){
 			player.pelea(robot5);
 			bajarVida();			
-		   }
-		  if(FlxG.overlap(robot6,player)){
-			player.pelea(robot6);
-			bajarVida();			
-		   }
-		   
-		    if(FlxG.overlap(boss,player)){
-			if(bosstime==0){
-			bosshurt=player.bossFight(boss);
-			bosstime++;
-			bajarVida();
-			}
-			
-		   }
-		   //trace("bosstime: "+bosstime);
-		   if (bosstime>0 && bosstime<100){
-				bosshurt=true;
-				bosstime++;
-			}
-			else {
-				bosstime=0;
-				bosshurt=false;
-			}
-		   
-		   
-		   
+		   }   
 		   
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
 				FlxG.switchState(new Nivel3());
+		   }
+		   if(FlxG.collide(player,fin)){
+				FlxG.switchState(new NivelBoss());
 		   }
 		   
 		  }

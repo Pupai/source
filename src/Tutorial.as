@@ -66,16 +66,11 @@ package {
 		
 		 override public function create():void
         {
-            /*var s:FlxSprite = new FlxSprite();
-			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
-            add(s);*/			
+	
 			mapa_top =  new FlxTilemap();
 			mapa_top.loadMap(new Top(), topTiles,45,32);
          	add(mapa_top);
-         	
-			
-			
-			
+         		
 			mapa_items =  new FlxTilemap();
 			mapa_items.loadMap(new Items(), itemsTiles,45,32);
          	add(mapa_items);
@@ -94,20 +89,21 @@ package {
 		   add(escalera);
 		   crate=new Item("crate",45,32,300,415);
 		   crate.acceleration.y=1000;
+		   
 		   visores=new Item("visores",68,54,0,250);
+		   
 		   trampadelmal = new FlxTileblock(586, 118, 45, 32);
 		   trampadelmal.alpha=0;
 		   trampadelmal.makeGraphic(45, 32);
-		   
 		   add(trampadelmal);
+		   
 		   trailer=new FlxSprite(0,355,trailer_image);
 		   trailer.immovable=true;
 		   add(trailer);
 		   add(crate);
 		   add(visores);
 		  
-		   player = new Jugador(0,370);
-		   
+		   player = new Jugador(0,370);  
 		   add(player);
 		   
 		   perro= new Perro();
@@ -118,7 +114,7 @@ package {
 		   perro2.x=650;
 		   perro2.y=370;
 		   add(perro2);
-		   texto=new FlxText(50, 260, FlxG.width, "Muevete con las flechas del teclado, salta con espacio y acelera con A," +"\n"+ "tu primera prueba sera esquivar a los enemigos y llegar al final" ).setFormat(null, 9, 0xFFF3030, "center");
+		   texto=new FlxText(10, 200, FlxG.width, "Muevete con las flechas del teclado,salta con espacio"+"\n"+"y acelera con A, tu primera prueba sera esquivar"+"\n"+ "a los enemigos y llegar al final" ).setFormat(null, 14, 0xFFF3030, "center");
          
            add(texto);
 		   
