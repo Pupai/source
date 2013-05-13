@@ -2,7 +2,7 @@ package {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	public class sentinel extends FlxSprite {
-				[Embed(source = "Nivel3\\sentinel.png")] public static var bossLevel2:Class;
+				[Embed(source = "boss\\nave.png")] public static var bossLevel2:Class;
 		
 		public function sentinel(){
 			health=100;
@@ -10,10 +10,9 @@ package {
 			
 			super();
 			
-			loadGraphic(bossLevel2, true, true,97, 180, true);
+			loadGraphic(bossLevel2, true, true,80, 107, true);
 			
-			addAnimation("left", [0,1,2,3,4], 5, false);
-			addAnimation("right", [5,6,7,8,9], 5, false);
+			addAnimation("anima", [0,1,2,3], 5, false);
 			
 			
 			

@@ -39,9 +39,14 @@
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
+<<<<<<< HEAD
 			var name:String=input.getText();
 			remove(input);
 			FlxG.switchState(new HighScore(50,"nivel1","Dobby"));
+=======
+
+			FlxG.switchState(new Nivel3());
+>>>>>>> fdf56725a1adf8450ae05e321cb798bee8639b4d
 
 			
 		}

@@ -41,6 +41,8 @@ package {
 		private var name:String;
 
 				
+	  		
+		[Embed(source = "Nivel3\\plataforma.png")] public static var plataforma_img:Class;
 	  
 		private var player:Jugador;
 		private var lifebar: FlxSprite;
@@ -48,7 +50,10 @@ package {
 		private var bar20_40: FlxSprite;
 		private var bar40_60: FlxSprite;
 		private var bar60_80: FlxSprite;
-			
+		
+		private var plat1: FlxSprite;
+		private var plat2: FlxSprite;	
+		private var plat3: FlxSprite;	
 				
 		private var camera:FlxCamera;
 		
@@ -58,16 +63,19 @@ package {
 		private var entrada: FlxSprite;
 		
 		private var swapc: Boolean=false;
+		 var cosa : Boolean=true;
+		
 
 		private var timeRemaining:Number = 0; // in seconds
-		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
-
+		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50).setFormat(null,8,0xff0000);
 		private var counter : int=0;
-		private var swap:Boolean=false;
-		private var swap2:Boolean=false;
+		private var swap:Boolean=true;
+		private var swap2:Boolean=true;
 		private var paused:Boolean=true;
 		private var pared1:FlxTileblock;
 		private var pared2:FlxTileblock;
+		
+		private var boss: sentinel;
 
 		
 		 public function NivelBoss(t:Number, n:String)
@@ -83,6 +91,9 @@ package {
            	
 			
 		
+			
+		   
+		   
 		   mapa_pared =  new FlxTilemap();
 		   mapa_pared.loadMap(new Pared(), paredTiles,45,32);
            add(mapa_pared);
@@ -126,8 +137,8 @@ package {
 		   pared1.makeGraphic(2, 150);
 		   add(pared1);
 		   
-		   pared2 = new FlxTileblock(4497, 0, 2, 450);
-		   pared2.alpha=100;
+		   pared2 = new FlxTileblock(805, 100, 2, 450);
+		   pared2.alpha=0;
 		   pared2.makeGraphic(2, 450);
 		   add(pared2);
 		   
@@ -137,13 +148,98 @@ package {
 			
 			FlxG.playMusic(sound);
 			
-	
+			boss= new sentinel();
+			boss.x=200;
+			boss.y=player.y-80;
+			boss.health=200;
+			add(boss);
+			
+			
+			
+			plat1=new FlxSprite(120,298,plataforma_img);
+		   plat1.immovable=true;
+		   add(plat1);
+		   
+		   plat2=new FlxSprite(660,20,plataforma_img);
+		   plat2.immovable=true;
+		   add(plat2);
+		   
+		   
+			
 		   //mundo de 18 x 13 y Tiles de 45 x 32
 		   FlxG.camera.setBounds(0,0,810,416);
 		   FlxG.camera.follow(player);
 		   FlxG.worldBounds=new FlxRect(0,0,810,416);	   
 		}
 		
+		
+		public function moverBoss(): void{
+			
+			 
+			 if(swap==true){
+				if(swap2){
+				boss.y-=2;
+				boss.x+=2;
+				if(boss.y==20){
+					swap2=false;
+				}
+				}
+				if(swap2==false){
+				boss.y+=2;
+				boss.x+=2;
+				}
+				
+				if(boss.x>=600){
+					swap=false;
+				}
+				
+			 }
+			 
+			 if( swap==false){
+				if(swap2==false){
+				boss.y-=2;
+				boss.x-=2;
+				if(boss.y==20){
+					swap2=true;
+				}
+				}
+				if(swap2==true){
+				boss.y+=2;
+				boss.x-=2;
+				}
+				
+				if(boss.x<=150){
+					swap=true;
+				}
+			 }
+			
+			
+		}
+		
+		public function moverPlats(): void{
+			
+			 
+			 if(cosa==true){
+				plat1.y++;
+				plat2.y--;
+				
+				if(plat1.y==299){
+					cosa=false;
+				}
+				
+			 }
+			 
+			 if( cosa==false){
+				plat1.y--;
+				plat2.y++;
+				
+				if(plat1.y==20){
+					cosa=true;
+				}
+			 }
+			
+			
+		}
 		
 		public function barra():void{
 			if(player.health==60){
@@ -184,10 +280,19 @@ package {
 		}
 	
 		override public function update():void{
-		
+			
+			moverBoss();
+			moverPlats();
 	       super.update();
 		   time();
+		   trace(boss.health);
 		   
+		   boss.play("anima"); 
+		   
+		   
+		   
+		   
+
 				if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -236,6 +341,15 @@ package {
 	  
 		   FlxG.collide(player,pared1);
 		   FlxG.collide(player,pared2);
+		   FlxG.collide(player,plat1);
+		   FlxG.collide(player,plat2);
+		   FlxG.collide(player,plat3);
+		   
+		   if(FlxG.overlap(player,boss)){
+			
+			player.peleaj(boss);
+			bajarVida();
+		   }
 		   
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new NivelBoss(timeRemaining,name));
