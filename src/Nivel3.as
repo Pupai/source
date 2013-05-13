@@ -410,7 +410,7 @@ package {
 	       super.update();
 		   time();
 		   
-		   player.health=1000000;
+		   player.health=80;
 		   
 				if(FlxG.keys.justPressed("P"))
 				paused = !paused;

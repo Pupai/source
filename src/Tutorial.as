@@ -49,10 +49,7 @@ package {
 		private var musica:FlxG= new FlxG();
 		var counter : int=0;
 		
-<<<<<<< HEAD
-=======
 		var contador:Number = 0; // in seconds
->>>>>>> fdf56725a1adf8450ae05e321cb798bee8639b4d
 		
 		
 		private var name:String;
@@ -255,16 +252,13 @@ package {
 		player.kill();
 		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 15, 0xFFF3030, "left");
          add(texto);
-<<<<<<< HEAD
 		 
 		 FlxG.switchState(new PreNivel1(name));
-=======
-		 		 contador+= FlxG.elapsed;
-		 trace(contador)
+
+		 contador+= FlxG.elapsed;
+		 trace(contador);
 		 if(contador>=3){
-		 FlxG.switchState(new PreNivel1());
-		 }
->>>>>>> fdf56725a1adf8450ae05e321cb798bee8639b4d
+	 }
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){
