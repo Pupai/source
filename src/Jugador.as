@@ -53,6 +53,7 @@
 			if (this.y + 26 < a.y) {
 				trace(this.y, a.y);
 				a.hurt(20);
+				this.y-=40;
 				
 			} else {
 				this.hurt(20);

@@ -111,7 +111,7 @@ package {
 				
 
 		private var timeRemaining:Number = 0; // in seconds
-		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
+		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50).setFormat(null,8,0xff0000);
 		
 
 		private var counter : int=0;
@@ -309,19 +309,23 @@ package {
 		   
 		   
 		   plat3=new FlxSprite(2970,320,plataforma_img);
-		   plat3.immovable=true;
+		   		   plat3.immovable=true;
+		   
 		   add(plat3);
 		   
 		   plat4=new FlxSprite(3085,320,plataforma_img);
-		   plat4.immovable=true;
+		   		   plat4.immovable=true;
+		   
 		   add(plat4);
 		   
 		   plat5=new FlxSprite(3375,320,plataforma_img);
-		   plat5.immovable=true;
+		   		   plat5.immovable=true;
+		   
 		   add(plat5);
 		   
 		   plat6=new FlxSprite(3485,320,plataforma_img);
-		   plat6.immovable=true;
+		   		   plat6.immovable=true;
+		   
 		   add(plat6);
 		   
 		   platj=new FlxSprite(4120,332,plataforma_img);
@@ -404,6 +408,8 @@ package {
 	       super.update();
 		   time();
 		   
+		   player.health=1000000;
+		   
 				if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -417,10 +423,6 @@ package {
 		  if(robot1.x<=755 && swap==false){
 			plat1.x-=2;
 			plat2.x+=2;
-			plat3.x--;
-			plat4.x--;
-			plat5.x--;
-			plat6.x--;
 			platj.y++;			
 			robot1.x--;
 			robot3.x--;
@@ -437,10 +439,6 @@ package {
 	  	 if(robot1.x>=620 && swap==true){
 			plat1.x+=2;
 			plat2.x-=2;
-			plat3.x++;
-			plat4.x++;
-			plat5.x++;
-			plat6.x++;
 			platj.y--;
 			robot1.x++;
 			robot3.x++;
@@ -525,10 +523,7 @@ package {
 		   
 		   
 		   FlxG.collide(player,plat2);
-		   FlxG.collide(player,plat3);
-		   FlxG.collide(player,plat4);
-		   FlxG.collide(player,plat5);
-		   FlxG.collide(player,plat6);
+		  
 		   FlxG.collide(player,pared1);
 		   FlxG.collide(player,pared2);
 		  		   
@@ -581,6 +576,18 @@ package {
 		   }
 		   if(FlxG.collide(player,fin)){
 				FlxG.switchState(new NivelBoss());
+		   }
+		   if(FlxG.collide(player,plat3)){
+			plat3.y+=10;
+		   }
+		   if(FlxG.collide(player,plat4)){
+			plat4.y+=10;
+		   }
+		   if(FlxG.collide(player,plat5)){
+			plat5.y+=10;
+		   }
+		   if(FlxG.collide(player,plat6)){
+			plat6.y+=10;
 		   }
 		   
 		  }

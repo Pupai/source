@@ -49,8 +49,7 @@ package {
 		private var musica:FlxG= new FlxG();
 		var counter : int=0;
 		
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 5, 50);
+		var contador:Number = 0; // in seconds
 		
 		
 		
@@ -127,22 +126,14 @@ package {
 		   
 		}
 		
-		public function time():void{
-		 timeRemaining += FlxG.elapsed;
-    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
-		 timeRemainingDisplay.scrollFactor.x=0;
-		 timeRemainingDisplay.scrollFactor.y=0;
-		 		 
-		 add(timeRemainingDisplay);
 		
-		}
 			
 		override public function update():void
     {
 		
        super.update();
 	   
-	   time();
+	   
 	   
 	   visores.x=player.x-10;
 	   texto.x=visores.x+20;
@@ -257,10 +248,13 @@ package {
 	   if(player.angularVelocity>200 ){
 		visores.y=250
 		player.kill();
-		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
+		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 15, 0xFFF3030, "left");
          add(texto);
-		 
+		 		 contador+= FlxG.elapsed;
+		 trace(contador)
+		 if(contador>=3){
 		 FlxG.switchState(new PreNivel1());
+		 }
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){
