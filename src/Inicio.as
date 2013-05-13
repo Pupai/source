@@ -12,7 +12,7 @@
     import org.flixel.FlxText;
 	
 	public class Inicio extends FlxState{
-		
+		[Embed(source = "pupailogo.png")] public static var logoclass:Class;
 		private var input:FlxInputText = new FlxInputText(FlxG.width/3+20, 50, 200, "Escribe tu nombre", 0xffffff0, null, 17, "center");
 		private var texto:FlxText;
 		
@@ -28,14 +28,16 @@
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
 			add(input)
+			var logo:FlxSprite=new FlxSprite();
+			logo.loadGraphic(logoclass, true, true,500, 265, true);
+			logo.x=30;
+			logo.y=100;
  
-    
- 			texto=new FlxText(0, 100, FlxG.width, "Unum Pupai").setFormat(null, 28, 0xFFF3030, "center");
-         
+    		add(logo);         
            add(texto);
 		   
 		   
-		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Start Game!", Iniciar);
+		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 -100, "Start Game!", Iniciar);
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
