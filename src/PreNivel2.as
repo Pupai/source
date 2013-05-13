@@ -15,10 +15,17 @@
 		
 		
 		private var texto:FlxText;
+		private var level:String;
+		private var time:Number;
+		private var name:String;
 		
-		 public function PreNivel2()
+		 public function PreNivel2(t:Number, l:String, n:String)
         {
             super();
+			time=t;
+			level=l;
+			name=n;
+			
         }
 		
 		
@@ -28,12 +35,17 @@
 			s.makeGraphic(FlxG.width, FlxG.height, 0xFFFF50);
             add(s);
 		   
-		   
+		   var botonScore:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 30, " Agregar Score", agregarScore);
+		   add(botonScore);
 		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Level 2!", Iniciar);
 		   add(botonInicio);
 		}
+		public function agregarScore():void{
+			FlxG.switchState(new HighScore(time, "nivel1", name));
+			
+		}
 		public function Iniciar():void{
-			FlxG.switchState(new Nivel2());
+			FlxG.switchState(new Nivel2(name,0));
 			
 		}
 
@@ -42,6 +54,8 @@
 		override public function update():void
     {	   
         super.update();
+		trace(time);
+		trace(level);
 	   
     }
 		

@@ -36,6 +36,9 @@ package {
 		
 		[Embed(source = "boss\\boss_ground.csv", mimeType="application/octet-stream")] public static var Ground:Class;
 		[Embed(source = "boss\\boss_pared.csv", mimeType="application/octet-stream")] public static var Pared:Class;
+		
+	
+		private var name:String;
 
 				
 	  
@@ -67,9 +70,11 @@ package {
 		private var pared2:FlxTileblock;
 
 		
-		 public function NivelBoss()
+		 public function NivelBoss(t:Number, n:String)
         {
             super();
+			timeRemaining=t;
+			name=n;
         }
 		
 		
@@ -233,7 +238,7 @@ package {
 		   FlxG.collide(player,pared2);
 		   
 		   if(bar0_20.exists == false){
-				FlxG.switchState(new NivelBoss());
+				FlxG.switchState(new NivelBoss(timeRemaining,name));
 		   }
 
 		   

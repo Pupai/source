@@ -117,12 +117,15 @@ package {
 		private var swap2:Boolean=false;
 		
 		private var paused:Boolean=true;
+		private var name:String;
 
 		private var c:Number=0;
 		
-		 public function Nivel2()
+		 public function Nivel2(n:String, t:Number)
         {
             super();
+			name=n;
+			timeRemaining=t;
         }
 		
 		
@@ -689,10 +692,10 @@ package {
 	   
 		  
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
-				FlxG.switchState(new Nivel2());
+				FlxG.switchState(new Nivel2(name, timeRemaining));
 		   }
 		   if(FlxG.collide(player,entrada_gips)){
-				FlxG.switchState(new PreNivel3());
+				FlxG.switchState(new PreNivel3(timeRemaining,"nivel2",name));
 		   }
 		  }
 		   

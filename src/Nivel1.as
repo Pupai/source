@@ -126,10 +126,14 @@ package {
 		private var timeRemaining:Number = 0; // in seconds
 		private var timeRemainingDisplay:FlxText = new FlxText(5, 25, 50);
 		
+		private var name:String;
 		
-		 public function Nivel1()
+		
+		 public function Nivel1(n:String, t:Number)
         {
             super();
+			name=n;
+			timeRemaining=t;
         }
 		
 		
@@ -217,7 +221,7 @@ package {
 		   add(pared_ed);
 		   
 		   p_texto = new FlxTileblock(1850, 730, 2, 120);
-		   p_texto.alpha=100;
+		   p_texto.alpha=0;
 		   p_texto.makeGraphic(2, 120);
 		   add(p_texto);
 		   
@@ -385,12 +389,12 @@ package {
 		
 	       super.update();
 
-		   
+		   trace("tiempo: "+timeRemaining);
 		   time();
 		   
 		   if( player.y>930){
 			
-			FlxG.switchState(new PreNivel2());
+			FlxG.switchState(new PreNivel2(timeRemaining,"nivel1",name));
 			
 		   }
 		   
@@ -600,11 +604,15 @@ package {
 			}
 		  
 		   if(bar0_20.exists == false){
-				FlxG.switchState(new Nivel1());
+				FlxG.switchState(new Nivel1(name, timeRemaining));
 		   }
 		   if(FlxG.overlap(p_texto,player)){
 				texto.visible=true;		
 		   }
+		   
+		   if(boss.health<=0){
+				tapa.x+=100;
+	  		}
 		   
 		    if(FlxG.collide (player, boton) && FlxG.keys.pressed("S")){
 				addboss=true;		
@@ -677,7 +685,7 @@ package {
 			}
 			
 	   }
-	   }
+		}
 			
 			
 		

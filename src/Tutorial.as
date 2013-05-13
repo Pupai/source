@@ -49,18 +49,18 @@ package {
 		private var musica:FlxG= new FlxG();
 		var counter : int=0;
 		
-		var timeRemaining:Number = 0; // in seconds
-		var timeRemainingDisplay:FlxText = new FlxText(5, 5, 50);
 		
 		
+		private var name:String;
 		
 		var _jump:Number = 0;
 		var swap:Boolean=false;
 		var swap2:Boolean=false;
 		
-		 public function Tutorial()
+		 public function Tutorial(n:String)
         {
             super();
+			name=n;
         }
 		
 		
@@ -118,7 +118,7 @@ package {
          
            add(texto);
 		   
-		   		   FlxG.playMusic(sound);
+		   FlxG.playMusic(sound);
 		  
 		   //camera=new FlxCamera(-100, 100, 770, 544);
 		   FlxG.camera.setBounds(0,0,765,544);
@@ -127,26 +127,18 @@ package {
 		   
 		}
 		
-		public function time():void{
-		 timeRemaining += FlxG.elapsed;
-    	 timeRemainingDisplay.text = FlxU.formatTime(timeRemaining); 
-		 timeRemainingDisplay.scrollFactor.x=0;
-		 timeRemainingDisplay.scrollFactor.y=0;
-		 		 
-		 add(timeRemainingDisplay);
 		
-		}
 			
 		override public function update():void
     {
 		
        super.update();
 	   
-	   time();
+	   
 	   
 	   visores.x=player.x-10;
 	   texto.x=visores.x+20;
-	   visores.play("move")
+	   visores.play("move");
 	   
 	   if(player.x>100){
 		texto.visible=false;
@@ -255,12 +247,12 @@ package {
 			
 	   }
 	   if(player.angularVelocity>200 ){
-		visores.y=250
+		visores.y=250;
 		player.kill();
 		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 9, 0xFFF3030, "center");
          add(texto);
 		 
-		 FlxG.switchState(new PreNivel1());
+		 FlxG.switchState(new PreNivel1(name));
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){

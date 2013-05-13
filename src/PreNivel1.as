@@ -15,10 +15,14 @@
 		
 		
 		private var texto:FlxText;
+		private var level:String;
+		private var time:Number;
+		private var name:String;
 		
-		 public function PreNivel1()
+		 public function PreNivel1(n:String)
         {
             super();
+			name=n;
         }
 		
 		
@@ -33,7 +37,7 @@
 		   add(botonInicio);
 		}
 		public function Iniciar():void{
-			FlxG.switchState(new Nivel1());
+			FlxG.switchState(new Nivel1(name,0));
 			
 		}
 

@@ -48,7 +48,7 @@ package {
 		[Embed(source = "Nivel3\\nivel3_pared.csv", mimeType="application/octet-stream")] public static var Pared:Class;
 		[Embed(source = "Nivel3\\nivel3_gips.csv", mimeType="application/octet-stream")] public static var Gips:Class;
 
-				
+		private var name:String;	
 	  
 		private var player:Jugador;
 		private var lifebar: FlxSprite;
@@ -123,9 +123,11 @@ package {
 		private var fin:FlxTileblock;
 
 		
-		 public function Nivel3()
+		 public function Nivel3(n:String, t:Number)
         {
             super();
+			name=n;
+			timeRemaining=t;
         }
 		
 		
@@ -577,10 +579,10 @@ package {
 		   }   
 		   
 		   if(bar0_20.exists == false || FlxG.collide(player,piso)){
-				FlxG.switchState(new Nivel3());
+				FlxG.switchState(new Nivel3(name,timeRemaining));
 		   }
 		   if(FlxG.collide(player,fin)){
-				FlxG.switchState(new NivelBoss());
+				FlxG.switchState(new NivelBoss(timeRemaining,name));
 		   }
 		   
 		  }
