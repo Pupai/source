@@ -76,7 +76,6 @@ package {
 		private var picos2: FlxSprite;
 		private var picos3: FlxSprite;
 		private var picos4: FlxSprite;
-		private var picos5: FlxSprite;
 		
 		private var robot1:Robot;
 		private var robot2:Robot;
@@ -248,27 +247,22 @@ package {
 		   add(rayo5);*/
 		   
 		   //PICOS
-		   picos1=new FlxSprite(340,299,picos_img);
+		   picos1=new FlxSprite(340,301,picos_img);
 		   picos1.immovable=true;
 		   add(picos1);	
 		   
-		   picos2=new FlxSprite(515,299,picos_img);
+		   picos2=new FlxSprite(515,301,picos_img);
 		   picos2.immovable=true;
 		   add(picos2);	
 		   
-		   picos3=new FlxSprite(750,299,picos_img);
+		   picos3=new FlxSprite(750,301,picos_img);
 		   picos3.immovable=true;
 		   add(picos3);
 		   
-		   picos4=new FlxSprite(1985,299,picos_img);
+		   picos4=new FlxSprite(1985,301,picos_img);
 		   picos4.immovable=true;
 		   add(picos4);
-		   
-		   picos5=new FlxSprite(3244,299,picos_img);
-		   picos5.immovable=true;
-		   add(picos5);
-		   
-		   
+	   
 		   //ROBOTS
 		   robot1= new Robot();
 		   robot1.x=675;
@@ -409,9 +403,7 @@ package {
 		
 	       super.update();
 		   time();
-		   
-		   player.health=80;
-		   
+	
 				if(FlxG.keys.justPressed("P"))
 				paused = !paused;
 				if(!paused)
@@ -538,7 +530,7 @@ package {
 		   //collides con daños
 		  		   
 		  if(FlxG.collide(player,picos1) || FlxG.collide(player,picos2) ||FlxG.collide(player,picos3) ||FlxG.collide(player,picos4) ||
-		   FlxG.collide(player,picos5) || FlxG.collide(player,rayo1)||FlxG.collide(player,rayo2)||FlxG.collide(player,rayo3)||
+		   FlxG.collide(player,rayo1)||FlxG.collide(player,rayo2)||FlxG.collide(player,rayo3)||
 		   FlxG.collide(player,rayo4)||FlxG.collide(player,rayo5) || FlxG.collide(player,saw1) || FlxG.collide(player,saw2) ||
 		   FlxG.collide(player,saw3) ||FlxG.collide(player,saw4) ){
 			

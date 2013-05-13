@@ -300,7 +300,7 @@ package {
 		   vida.add(bar0_20);
 		   add(vida);*/
 		 
-		   player = new Jugador(1600,600);
+		   player = new Jugador(20,500);
 		   //player.x=1600;
 		   //player.y=750;
 		   add(player);

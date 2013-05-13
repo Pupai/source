@@ -33,7 +33,7 @@
    
  		   texto=new FlxText(0, 55, FlxG.width, "Resources:").setFormat(null, 22, 0xFFFFFF, "center");         
            add(texto);
-		   txt=new FlxText(0, 110, FlxG.width, "Music            Last.fm"+"\n"+"Tiles        Rpg Maker"+"\n"+"Tiles     Graphicriver"+"\n"+"Sprites    DeviantArt"+"\n"+"Server      SmartFox"+"\n"+"Repository     Github"+"\n"+"Git Client     Tortoise"+"\n"+"Help       Prof. Sergio").setFormat(null, 18, 0xFFFFFF, "center");         
+		   txt=new FlxText(0, 110, FlxG.width, "Music                 FMA"+"\n"+"Tiles        Rpg Maker"+"\n"+"Tiles     Graphicriver"+"\n"+"Sprites    DeviantArt"+"\n"+"Server      SmartFox"+"\n"+"Repository     Github"+"\n"+"Git Client     Tortoise"+"\n"+"Help       Prof. Sergio").setFormat(null, 18, 0xFFFFFF, "center");         
            add(txt);
 		   
 		   		   
