@@ -354,6 +354,9 @@ package {
 		   if(bar0_20.exists == false){
 				FlxG.switchState(new NivelBoss(timeRemaining,name));
 		   }
+		   if(boss.health<=0){
+				FlxG.switchState(new Fin(timeRemaining,"nivel3",name));
+		   }
 
 		   
 		  }

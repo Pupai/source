@@ -49,10 +49,8 @@ package {
 		private var musica:FlxG= new FlxG();
 		var counter : int=0;
 		
-<<<<<<< HEAD
-=======
 		var contador:Number = 0; // in seconds
->>>>>>> fdf56725a1adf8450ae05e321cb798bee8639b4d
+
 		
 		
 		private var name:String;
@@ -118,7 +116,7 @@ package {
 		   perro2.x=650;
 		   perro2.y=370;
 		   add(perro2);
-		   texto=new FlxText(10, 200, FlxG.width, "Muevete con las flechas del teclado,salta con espacio"+"\n"+"y acelera con A, tu primera prueba sera esquivar"+"\n"+ "a los enemigos y llegar al final" ).setFormat(null, 14, 0xFFF3030, "center");
+		   texto=new FlxText(10, 200, FlxG.width, "Move with the arrows, jump with spacebar"+"\n"+"and run with A. Your first test is to avoid the enemies"+"\n"+ "to get to the end. Good luck Pupai!" ).setFormat(null, 14, 0xFFF3030, "center",1);
          
            add(texto);
 		   
@@ -253,18 +251,13 @@ package {
 	   if(player.angularVelocity>200 ){
 		visores.y=250;
 		player.kill();
-		texto=new FlxText(300, 300, FlxG.width, "No pudiste con la primera prueba!!" ).setFormat(null, 15, 0xFFF3030, "left");
+		texto=new FlxText(300, 300, FlxG.width, "You've failed the first test..." ).setFormat(null, 15, 0xFFF3030, "left",1);
          add(texto);
-<<<<<<< HEAD
-		 
-		 FlxG.switchState(new PreNivel1(name));
-=======
-		 		 contador+= FlxG.elapsed;
-		 trace(contador)
+		 contador+= FlxG.elapsed;
 		 if(contador>=3){
-		 FlxG.switchState(new PreNivel1());
+		 FlxG.switchState(new PreNivel1(name));
 		 }
->>>>>>> fdf56725a1adf8450ae05e321cb798bee8639b4d
+
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){

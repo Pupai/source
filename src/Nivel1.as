@@ -343,7 +343,7 @@ package {
 		   }
 		   add(globiza);
 		    FlxG.playMusic(sound);
-			texto=new FlxText(1400, 640, FlxG.width, "¡Activa el botón pegándote a él y apretando S!"+"\n"+"Regresa al inicio para derrotar al boss"+"\n"+"y poder desbloquear la escalera" ).setFormat(null, 12, 0xFFF3030, "center");
+			texto=new FlxText(1375, 615, FlxG.width, "Activate the button by standing next to it pressing the"+"\n"+"left arrow and S. Then go back and defeat"+"\n"+"the boss so you can unblock the stairs!" ).setFormat(null, 13, 0xffffff, "center", 20);
 		   add(texto);
 		   texto.visible=false;
 		   //mundo de 45 x 30 y Tiles de 45 x 32
@@ -389,7 +389,6 @@ package {
 		
 	       super.update();
 
-		   trace("tiempo: "+timeRemaining);
 		   time();
 		   
 		   if( player.y>930){

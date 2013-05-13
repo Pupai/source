@@ -14,7 +14,7 @@
 
 		{
 			super(0,200);
-			health=10;
+			health=40;
 
 			
 			
