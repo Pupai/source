@@ -26,7 +26,8 @@ package {
 		private var time: int;
 		private var level: String;
 		private var name: String;
-		
+		private var pressed:Boolean=false;
+		private var botonAgregar:FlxButton
 		
 		 public function HighScore(t:Number, l:String, n:String)
         {
@@ -54,10 +55,10 @@ package {
 			sfs.addEventListener(SFSEvent.ROOM_JOIN, onJoin);
 			sfs.addEventListener(SFSEvent.ROOM_JOIN_ERROR, onJoinError);
 			
-		   var botonAgregar:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 90, "Enviar", enviarHS);
+		   botonAgregar=  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 90, "Enviar", enviarHS);
 		   var botonInicio:FlxButton =  new FlxButton(FlxG.width / 2 - 40, FlxG.height / 2 - 60, "Next Level!", Iniciar);
-		   var titulo : FlxText=new FlxText(0, 170, FlxG.width, "High Scores").setFormat(null, 20, 0xFFF3030, "center");
-		   var nombre : FlxText=new FlxText(0, 80, FlxG.width, name+" "+time).setFormat(null, 20, 0xFFF3030, "center");
+		   var titulo : FlxText=new FlxText(0, 170, FlxG.width, "High Scores").setFormat(null, 20, 0xFFFFFF, "center");
+		   var nombre : FlxText=new FlxText(0, 80, FlxG.width, "Tu score es: "+time).setFormat(null, 20, 0xFFF3030, "center");
 		   
 		   add(nombre);
 		   add(titulo);
@@ -79,9 +80,11 @@ package {
 		
 		public function enviarHS():void{
 			var fedex:ISFSObject= SFSObject.newInstance();
+			fedex.putUtfString("level",level);
 			fedex.putUtfString("name",name);
 			fedex.putUtfString("score",time+"");
 			sfs.send(new ExtensionRequest("db",fedex));
+			pressed=true;
 			
 		}
 
@@ -90,11 +93,12 @@ package {
 		override public function update():void
     {	   
         super.update();
-		trace("Tiempo: "+time+" Level: "+level);
-		trace(scores);
-		trace(name);
+		remove(texto);
 		texto=new FlxText(0, 200, FlxG.width, scores).setFormat(null, 15, 0xFFF3030, "center");
 		add(texto);
+		if(pressed){
+			botonAgregar.visible=false;
+		}
 	   
     }
 	private function onConfigLoadSuccess(evt:SFSEvent):void
@@ -115,7 +119,7 @@ package {
 				
 			trace("Estoy conectado");
 				
-				sfs.send( new LoginRequest("", "", "nuevo") );
+				sfs.send( new LoginRequest("", "", "Pupai") );
 				
 			}
 			else
@@ -136,7 +140,7 @@ package {
 		
 		private function onLogin(evt:SFSEvent):void {
 			trace("si se pudo");
-			sfs.send( new JoinRoomRequest("cuarto") );
+			sfs.send( new JoinRoomRequest("Tutorial") );
 			var fedex:ISFSObject= SFSObject.newInstance();
 			fedex.putUtfString("level",level);
 			sfs.send(new ExtensionRequest("db",fedex));

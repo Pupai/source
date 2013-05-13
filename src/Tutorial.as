@@ -50,7 +50,10 @@ package {
 		var counter : int=0;
 		
 		var contador:Number = 0; // in seconds
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4d1f5b54bf63a1316a403722f65d0cac012cfff6
 		
 		
 		private var name:String;
@@ -253,11 +256,21 @@ package {
 		player.kill();
 		texto=new FlxText(300, 300, FlxG.width, "You've failed the first test..." ).setFormat(null, 15, 0xFFF3030, "left",1);
          add(texto);
+<<<<<<< HEAD
 		 contador+= FlxG.elapsed;
 		 if(contador>=3){
 		 FlxG.switchState(new PreNivel1(name));
 		 }
 
+=======
+		 
+		 FlxG.switchState(new PreNivel1(name));
+
+		 contador+= FlxG.elapsed;
+		 trace(contador);
+		 if(contador>=3){
+	 }
+>>>>>>> 4d1f5b54bf63a1316a403722f65d0cac012cfff6
 	   }
 	   
 	    if(FlxG.overlap(perro2,player)){
